@@ -7,12 +7,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Entity\Consumer;
+use App\Entity\ProgramEvent;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
  */
 class Review
 {
+    /**
+     * One Review has many Events. This is the inverse side.
+     * @OneToMany(targetEntity="ProgramEvent", mappedBy="reviews")
+     */
+    private $reviews;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
+
     /**
      * Many Reviews have one Consumer. This is the owning side.
      * @ManyToOne(targetEntity="Consumer", inversedBy="reviews")

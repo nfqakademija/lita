@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use App\Entity\Review;
 use App\Entity\Program;
+use App\Entity\City;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProgramEventRepository")
@@ -16,26 +16,25 @@ use App\Entity\Program;
 class ProgramEvent
 {
     /**
-     * Many Events can have many Reviews.
-     * @ManyToMany(targetEntity="Review", mappedBy="reviews")
+     * Many features have one product. This is the owning side.
+     * @ManyToOne(targetEntity="City", inversedBy="program_events")
+     * @JoinColumn(name="city_id", referencedColumnName="id")
      */
-    private $eventReview;
+    private $cities;
 
     /**
-     * Many Events can have many Programs.
-     * @ManyToMany(targetEntity="Program", mappedBy="programs")
-     * @JoinTable(name="ProgramEvent",
-     *      joinColumns={@JoinColumn(name="review_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="program_id", referencedColumnName="id")},
-     *      )
+     * Many features have one product. This is the owning side.
+     * @ManyToOne(targetEntity="Review", inversedBy="program_events")
+     * @JoinColumn(name="review_id", referencedColumnName="id")
      */
-    private $eventPrograms;
+    private $reviews;
 
-    public function __construct()
-    {
-        $this->eventReview = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventPrograms = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    /**
+     * Many features have one product. This is the owning side.
+     * @ManyToOne(targetEntity="Program", inversedBy="program_events")
+     * @JoinColumn(name="program_id", referencedColumnName="id")
+     */
+    private $programs;
 
     /**
      * @ORM\Id()

@@ -7,12 +7,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Entity\Academy;
+use App\Entity\ProgramEvent;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProgramRepository")
  */
 class Program
 {
+    /**
+     * One Program has many Events. This is the inverse side.
+     * @OneToMany(targetEntity="ProgramEvent", mappedBy="programs")
+     */
+    private $events;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
+
     /**
      * Many Programs have one Academy. This is the owning side.
      * @ManyToOne(targetEntity="Academy", inversedBy="programs")
