@@ -3,12 +3,26 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\OneToMany;
+use App\Entity\Review;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConsumerRepository")
  */
 class Consumer
 {
+    /**
+     * One Consumer can leave Review. This is the inverse side.
+     * @OneToMany(targetEntity="Review", mappedBy="review")
+     */
+    private $reviews;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

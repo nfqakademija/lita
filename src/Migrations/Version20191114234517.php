@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191113233836 extends AbstractMigration
+final class Version20191114234517 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20191113233836 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE consumer (id INT AUTO_INCREMENT NOT NULL, consumer_name VARCHAR(255) NOT NULL, consumer_lastname VARCHAR(255) NOT NULL, consumer_email VARCHAR(255) NOT NULL, consumer_password VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE program_event (id INT AUTO_INCREMENT NOT NULL, program_start DATE NOT NULL, program_end DATE NOT NULL, program_location VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,9 @@ final class Version20191113233836 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE consumer');
+        $this->addSql('DROP TABLE program_event');
+        $this->addSql('ALTER TABLE consumer CHANGE сщтыconsumer_name consumer_name VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE program CHANGE academy_id academy_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE review CHANGE consumer_id consumer_id INT DEFAULT NULL');
     }
 }
