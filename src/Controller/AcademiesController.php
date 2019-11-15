@@ -23,12 +23,6 @@ class AcademiesController extends AbstractController
             ->getRepository(Academy::class)
             ->findAll();
 
-        if (!$academies) {
-            throw $this->NotFoundException(
-                'No academies were found '
-            );
-        }
-
         $academiesArray = array();
 
         foreach ($academies as $academy) {
