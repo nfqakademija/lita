@@ -1,5 +1,11 @@
+import axios from 'axios';
+
 export function getAcademies() {
-    return new Promise(resolve => {
+    return axios.get('/api/v1/academies')
+        .then( (response) => {
+                return response.data;
+            })
+    /*return new Promise(resolve => {
         setTimeout(() => resolve(
             [
                 {
@@ -40,5 +46,5 @@ export function getAcademies() {
                 }
             ]
         ), 1000)
-    })
+    })*/
 }
