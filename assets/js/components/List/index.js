@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Card from "../Card";
 
@@ -6,13 +6,13 @@ class List extends PureComponent {
     render() {
         const { academies } = this.props;
         return (
-            <Fragment>
+            <div className="row cards-list pt-5">
                 {academies.map((academy) => (
-                    <div key={academy.academy_id} className="mb-5">
+                    <div key={academy.academy_id} className="col-12 mb-5 mr-5">
                         <Card academy={academy} />
                     </div>
                 ))}
-            </Fragment>
+            </div>
         );
     }
 }

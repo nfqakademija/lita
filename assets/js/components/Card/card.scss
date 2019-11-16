@@ -1,3 +1,5 @@
+@import "../../../css/app";
+
 .price {
   font-weight: bolder;
 }
@@ -5,4 +7,12 @@
 .logo {
   height: 50px;
   width: 50px;
+}
+
+.cardWrapper {
+  min-width: 300px;
+}
+
+.card-right {
+  background-color: $bg_dark_grey;
 }
