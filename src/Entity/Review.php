@@ -101,4 +101,38 @@ class Review
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReviews(): ArrayCollection
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param ArrayCollection $reviews
+     */
+    public function setReviews(ArrayCollection $reviews): void
+    {
+        $this->reviews = $reviews;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConsumer()
+    {
+        return $this->consumer;
+    }
+
+    /**
+     * @param mixed $consumer
+     */
+    public function setConsumer($consumer): void
+    {
+        $this->consumer = $consumer;
+    }
+
+
 }

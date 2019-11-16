@@ -68,4 +68,24 @@ class City
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEvents(): ArrayCollection
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param ArrayCollection $events
+     */
+    public function setEvents(ArrayCollection $events): void
+    {
+        $this->events = $events;
+    }
+
+
+
+
 }
