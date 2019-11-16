@@ -50,6 +50,11 @@ class Program
      */
     private $program_url;
 
+    /**
+     * @ORM\Column(type="integer", length=100, nullable=true)
+     */
+    private $program_price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,6 +63,11 @@ class Program
     public function getProgramName(): ?string
     {
         return $this->program_name;
+    }
+
+    public function getProgramPrice(): ?int
+    {
+        return $this->program_price;
     }
 
     public function setProgramName(string $program_name): self
@@ -110,6 +120,4 @@ class Program
     {
         $this->academy = $academy;
     }
-
-
 }

@@ -119,5 +119,4 @@ class Consumer
         $this->reviews = $reviews;
     }
 
-
 }

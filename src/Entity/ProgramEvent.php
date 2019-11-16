@@ -146,6 +146,4 @@ class ProgramEvent
     {
         $this->programs = $programs;
     }
-
-
 }

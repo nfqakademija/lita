@@ -36,6 +36,21 @@ class Academy
      */
     private $academy_name;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $academy_url;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $academy_logo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $academy_email;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +59,21 @@ class Academy
     public function getAcademyName(): ?string
     {
         return $this->academy_name;
+    }
+
+    public function getAcademyUrl(): ?string
+    {
+        return $this->academy_url;
+    }
+
+    public function getAcademyLogo(): ?string
+    {
+        return $this->academy_logo;
+    }
+
+    public function getAcademyEmail(): ?string
+    {
+        return $this->academy_email;
     }
 
     public function setAcademyName(string $academy_name): self
@@ -68,12 +98,4 @@ class Academy
     {
         $this->programs = $programs;
     }
-
-
-
-
-
-
-
-
 }

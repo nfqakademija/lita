@@ -133,6 +133,4 @@ class Review
     {
         $this->consumer = $consumer;
     }
-
-
 }

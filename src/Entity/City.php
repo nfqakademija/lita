@@ -35,10 +35,6 @@ class City
      */
     private $city;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $city_address;
 
     public function getId(): ?int
     {
@@ -53,18 +49,6 @@ class City
     public function setCity(string $city): self
     {
         $this->city = $city;
-
-        return $this;
-    }
-
-    public function getCityAddress(): ?string
-    {
-        return $this->city_address;
-    }
-
-    public function setCityAddress(string $city_address): self
-    {
-        $this->city_address = $city_address;
 
         return $this;
     }
@@ -84,8 +68,4 @@ class City
     {
         $this->events = $events;
     }
-
-
-
-
 }
