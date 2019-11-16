@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
 use App\Entity\Program;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AcademyRepository")
  */
@@ -51,4 +52,28 @@ class Academy
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPrograms(): ArrayCollection
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param ArrayCollection $programs
+     */
+    public function setPrograms(ArrayCollection $programs): void
+    {
+        $this->programs = $programs;
+    }
+
+
+
+
+
+
+
+
 }

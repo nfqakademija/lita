@@ -78,4 +78,38 @@ class Program
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEvents(): ArrayCollection
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param ArrayCollection $events
+     */
+    public function setEvents(ArrayCollection $events): void
+    {
+        $this->events = $events;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAcademy()
+    {
+        return $this->academy;
+    }
+
+    /**
+     * @param mixed $academy
+     */
+    public function setAcademy($academy): void
+    {
+        $this->academy = $academy;
+    }
+
+
 }

@@ -98,4 +98,54 @@ class ProgramEvent
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCities()
+    {
+        return $this->cities;
+    }
+
+    /**
+     * @param mixed $cities
+     */
+    public function setCities($cities): void
+    {
+        $this->cities = $cities;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param mixed $reviews
+     */
+    public function setReviews($reviews): void
+    {
+        $this->reviews = $reviews;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrograms()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param mixed $programs
+     */
+    public function setPrograms($programs): void
+    {
+        $this->programs = $programs;
+    }
+
+
 }

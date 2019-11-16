@@ -102,4 +102,22 @@ class Consumer
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReviews(): ArrayCollection
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param ArrayCollection $reviews
+     */
+    public function setReviews(ArrayCollection $reviews): void
+    {
+        $this->reviews = $reviews;
+    }
+
+
 }
