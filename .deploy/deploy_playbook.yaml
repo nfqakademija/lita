@@ -64,9 +64,13 @@
         args:
             chdir: "{{ deploy_helper.new_release_path }}"
 
+      - name: "Install assets"
+          shell: bin/console assets:install
+
       - name: Finalize the deploy, removing the unfinished file and switching the symlink
         deploy_helper:
             path: "{{ deployment.deploy_path }}"
             release: "{{ deploy_helper.new_release }}"
             state: finalize
             keep_releases: 2
+
