@@ -1,0 +1,9 @@
+easy_admin:
+    entities:
+        # List the entity class name you want to manage
+        - App\Entity\Academy
+        - App\Entity\City
+        - App\Entity\Consumer
+        - App\Entity\Review
+        - App\Entity\Program
+        - App\Entity\ProgramEvent
