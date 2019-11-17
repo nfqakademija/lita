@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
 use App\Entity\Program;
@@ -14,13 +15,18 @@ class Academy
 {
     /**
      * One Academy has many Programs. This is the inverse side.
-     * @OneToMany(targetEntity="Program", mappedBy="program")
+     * @OneToMany(targetEntity="Program", mappedBy="academy")
      */
     private $programs;
 
     public function __construct()
     {
         $this->programs = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->academy_name;
     }
 
     /**
@@ -82,10 +88,31 @@ class Academy
         return $this;
     }
 
+    public function setAcademyUrl(string $academy_url): self
+    {
+        $this->academy_url = $academy_url;
+
+        return $this;
+    }
+
+    public function setAcademyLogo(string $academy_logo): self
+    {
+        $this->academy_logo = $academy_logo;
+
+        return $this;
+    }
+
+    public function setAcademyEmail(string $academy_email): self
+    {
+        $this->academy_email = $academy_email;
+
+        return $this;
+    }
+
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getPrograms(): ArrayCollection
+    public function getPrograms(): Collection
     {
         return $this->programs;
     }
