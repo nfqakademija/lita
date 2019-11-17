@@ -18,7 +18,7 @@ class Program
 {
     /**
      * One Program has many Events. This is the inverse side.
-     * @OneToMany(targetEntity="ProgramEvent", mappedBy="programs")
+     * @OneToMany(targetEntity="ProgramEvent", mappedBy="programs", cascade={"remove"})
      */
     private $events;
 
@@ -79,7 +79,6 @@ class Program
     public function setProgramPrice(int $program_price): self
     {
         $this->program_price = $program_price;
-
         return $this;
     }
 
@@ -103,7 +102,7 @@ class Program
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getEvents(): Collection
     {

@@ -15,7 +15,7 @@ class Academy
 {
     /**
      * One Academy has many Programs. This is the inverse side.
-     * @OneToMany(targetEntity="Program", mappedBy="academy")
+     * @OneToMany(targetEntity="Program", mappedBy="academy", cascade={"remove"})
      */
     private $programs;
 

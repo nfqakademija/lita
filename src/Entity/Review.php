@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Entity\Consumer;
@@ -17,13 +18,18 @@ class Review
 {
     /**
      * One Review has many Events. This is the inverse side.
-     * @OneToMany(targetEntity="ProgramEvent", mappedBy="reviews")
+     * @OneToMany(targetEntity="ProgramEvent", mappedBy="reviews", cascade={"remove"})
      */
     private $reviews;
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->review_data;
     }
 
     /**
@@ -103,9 +109,9 @@ class Review
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getReviews(): ArrayCollection
+    public function getReviews(): Collection
     {
         return $this->reviews;
     }
