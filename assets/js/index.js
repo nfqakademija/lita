@@ -6,7 +6,7 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.scss');
+import '../css/app.scss';
 /*
 
 
@@ -21,13 +21,6 @@ $(document).ready(function() {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-class App extends React.Component {
-    render() {
-        return (
-            <div>initial code</div>
-        );
-    }
-}
+import App from './components/App';
 
 ReactDOM.render(<App />, document.getElementById('root'));
