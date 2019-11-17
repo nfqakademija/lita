@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Entity\Academy;
@@ -24,6 +25,11 @@ class Program
     public function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->program_name;
     }
 
     /**
@@ -70,6 +76,13 @@ class Program
         return $this->program_price;
     }
 
+    public function setProgramPrice(int $program_price): self
+    {
+        $this->program_price = $program_price;
+
+        return $this;
+    }
+
     public function setProgramName(string $program_name): self
     {
         $this->program_name = $program_name;
@@ -92,7 +105,7 @@ class Program
     /**
      * @return ArrayCollection
      */
-    public function getEvents(): ArrayCollection
+    public function getEvents(): Collection
     {
         return $this->events;
     }
