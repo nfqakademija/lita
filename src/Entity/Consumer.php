@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\OneToMany;
 use App\Entity\Review;
 
@@ -14,13 +15,18 @@ class Consumer
 {
     /**
      * One Consumer can leave Review. This is the inverse side.
-     * @OneToMany(targetEntity="Review", mappedBy="review")
+     * @OneToMany(targetEntity="Review", mappedBy="consumer", cascade={"remove"})
      */
     private $reviews;
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->consumer_name;
     }
 
     /**
@@ -104,9 +110,9 @@ class Consumer
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getReviews(): ArrayCollection
+    public function getReviews(): Collection
     {
         return $this->reviews;
     }

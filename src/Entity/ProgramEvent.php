@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use App\Entity\Review;
 use App\Entity\Program;
@@ -17,7 +18,7 @@ class ProgramEvent
 {
     /**
      * Many features have one product. This is the owning side.
-     * @ManyToOne(targetEntity="City", inversedBy="program_events")
+     * @ManyToOne(targetEntity="City", inversedBy="program_events", cascade={"remove"})
      * @JoinColumn(name="city_id", referencedColumnName="id")
      */
     private $cities;

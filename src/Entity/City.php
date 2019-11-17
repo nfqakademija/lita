@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\ProgramEvent;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,13 +15,18 @@ class City
 {
     /**
      * One City has many Events. This is the inverse side.
-     * @OneToMany(targetEntity="ProgramEvent", mappedBy="cities")
+     * @OneToMany(targetEntity="ProgramEvent", mappedBy="cities", cascade={"remove"})
      */
     private $events;
 
     public function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->city;
     }
 
     /**
@@ -54,9 +60,9 @@ class City
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getEvents(): ArrayCollection
+    public function getEvents(): Collection
     {
         return $this->events;
     }
