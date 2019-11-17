@@ -29,7 +29,7 @@ class Review
 
     public function __toString()
     {
-        return $this->review_data;
+        return $this->review_stars;
     }
 
     /**
