@@ -20,9 +20,7 @@ class App extends Component {
         const { academies } = this.state;
         return (
             <div className="container">
-                <div className="row">
-                    <List academies={academies} />
-                </div>
+                <List academies={academies} />
             </div>
         );
     }
