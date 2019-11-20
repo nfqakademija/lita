@@ -6,7 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Program;
 
-class ProgramFixtures extends Fixture
+class CityFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
