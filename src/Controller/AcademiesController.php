@@ -14,14 +14,21 @@ class AcademiesController extends AbstractController
      *
      * @return JsonResponse
      *
-     * @Route("/api/v1/academies", name="academies")
-     * @method({'GET'})
+     * @Route(
+     *     "/api/v1/academy/{id}",
+     *     name="academy",
+     *     methods={"GET"}
+     * )
      */
-    public function index()
+    public function getAcademies()
     {
         $academies = $this->getDoctrine()
             ->getRepository(Academy::class)
             ->findAll();
+
+        if ($academies === null) {
+            return new JsonResponse("We could not find any academies", Response::HTTP_NOT_FOUND);
+        }
 
         $academiesArray = array();
 
@@ -35,6 +42,45 @@ class AcademiesController extends AbstractController
             );
         }
 
-        return new JsonResponse($academiesArray);
+        return new JsonResponse(
+            $academiesArray,
+            JsonResponse::HTTP_OK
+        );
+    }
+
+
+    /**
+     * Returns academy selected by the id.
+     *
+     * @param $id
+     * @return JsonResponse
+     *
+     * @Route(
+     *     "/api/v1/academy/{id}",
+     *     name="academy",
+     *     methods={"GET"},
+     *     requirements={"id"="\d+"}
+     * )
+     */
+    public function getAcademy(int $id)
+    {
+        $academy = $this->getDoctrine()
+            ->getRepository(Academy::class)
+            ->find($id);
+
+        if ($academy === null) {
+            return new JsonResponse("There is no academy with id of: " . $id, Response::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse(
+            array(
+                'academy_id' => $academy->getId(),
+                'academy_name' => $academy->getAcademyName(),
+                'academy_email' => $academy->getAcademyEmail(),
+                'academy_url' => $academy->getAcademyUrl(),
+                'academy_logo' => $academy->getAcademyLogo(),
+            ),
+            JsonResponse::HTTP_OK
+        );
     }
 }
