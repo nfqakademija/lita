@@ -10,12 +10,14 @@ class ProgramFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $program = new Program();
+        for ($i = 0; $i < 8; $i++) {
+            $program = new Program();
 
-        $program->setProgramName('PHP');
-        $program->setProgramUrl('www.google.com/php');
-        $program->setProgramPrice('500');
-        $manager->persist($program);
-        $manager->flush();
+            $program->setProgramName('PHP');
+            $program->setProgramUrl('www.google.com/php');
+            $program->setProgramPrice('500');
+            $manager->persist($program);
+            $manager->flush();
+        }
     }
 }

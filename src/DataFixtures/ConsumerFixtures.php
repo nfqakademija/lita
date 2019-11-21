@@ -10,13 +10,15 @@ class ConsumerFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $consumer = new Consumer();
+        for ($i = 0; $i < 8; $i++) {
+            $consumer = new Consumer();
 
-        $consumer->setConsumerName('Petras');
-        $consumer->setConsumerLastname('Petrauskas');
-        $consumer->setConsumerEmail('email@email.com');
-        $consumer->setConsumerPassword('testas');
-        $manager->persist($consumer);
-        $manager->flush();
+            $consumer->setConsumerName('Petras');
+            $consumer->setConsumerLastname('Petrauskas');
+            $consumer->setConsumerEmail('email@email.com');
+            $consumer->setConsumerPassword('testas');
+            $manager->persist($consumer);
+            $manager->flush();
+        }
     }
 }

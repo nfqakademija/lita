@@ -10,10 +10,12 @@ class CityFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $city = new City();
+        for ($i = 0; $i < 4; $i++) {
+            $city = new City();
 
-        $city->setCity('Vilnius');
-        $manager->persist($city);
-        $manager->flush();
+            $city->setCity('Vilnius');
+            $manager->persist($city);
+            $manager->flush();
+        }
     }
 }

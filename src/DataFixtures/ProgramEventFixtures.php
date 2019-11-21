@@ -11,12 +11,14 @@ class ProgramEventFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $programEvent = new ProgramEvent();
+        for ($i = 0; $i < 4; $i++) {
+            $programEvent = new ProgramEvent();
 
-        $programEvent->setProgramStart(DateTime::createFromFormat('U', time()));
-        $programEvent->setProgramEnd(DateTime::createFromFormat('U', time()));
-        $programEvent->setProgramLocation('Vilnius');
-        $manager->persist($programEvent);
-        $manager->flush();
+            $programEvent->setProgramStart(DateTime::createFromFormat('U', time()));
+            $programEvent->setProgramEnd(DateTime::createFromFormat('U', time()));
+            $programEvent->setProgramLocation('Vilnius');
+            $manager->persist($programEvent);
+            $manager->flush();
+        }
     }
 }
