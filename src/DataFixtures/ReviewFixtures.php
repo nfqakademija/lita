@@ -12,8 +12,8 @@ class ReviewFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $review = new Review();
-        $review->setReviewStars('5');
 
+        $review->setReviewStars('5');
         $review->setReviewComment('Amazing course');
         $review->setReviewData(DateTime::createFromFormat('U', time()));
         $manager->persist($review);
