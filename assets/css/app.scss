@@ -1,13 +1,140 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif:700|Questrial&display=swap');
 
-// customize some Bootstrap variables
+// customize some variables
 $primary: darken(#428bca, 20%);
 $bg_dark_grey: #eae8ea;
-$bg-grey: #f9f9f7;
+$bg_grey: #f9f9f7;
+$primary-font: 'Noto Serif', serif;
+$secondary-font: 'Questrial', sans-serif;
+$dark-blue: #2a3365;
+$primary-button-color: #2929b5;
+$white: #ffffff;
+$black: #000000;
+$shadow-color: #def7fe;
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 @import '~font-awesome/scss/font-awesome';
 
 body {
-  background-color: $bg-grey;
+  background-color: $white;
+  font-family: $secondary-font;
+}
+
+.header-container {
+  max-width: 1350px;
+}
+
+.nav-item {
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1.6;
+  letter-spacing: .03rem;
+}
+
+.nav-item.active {
+  padding-bottom: 2px;
+  color: rgb(85, 85, 85);
+  border-bottom: 4px solid rgb(14, 30, 37);
+}
+
+.title {
+  color: $dark-blue;
+  display: block;
+  font-family: $primary-font;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  font-size: 3.9em;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: $dark-blue;
+  display: block;
+  font-family: $secondary-font;
+  line-height: 0.8;
+  letter-spacing: 0px;
+  font-size: 2em;
+}
+
+.btn {
+  position: relative;
+  z-index: 1;
+  transition-delay: 0.2s !important;
+  transition: color 0.5s ease-in-out;
+  overflow: hidden;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.125rem;;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  outline: 0;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  user-select: none;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid;
+  color: $white;
+}
+
+.btn-primary {
+  background-color: $primary-button-color;
+  border-color: $primary-button-color;
+
+  &:hover {
+    background-color: $dark-blue;
+    box-shadow: 0 8px 32px $shadow-color;
+  }
+}
+
+.brace {
+  width: auto;
+  min-width: 35px;
+  padding-bottom: 20px;
+  font-size: 2em;
+  line-height: 2em;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 15px 15px;
+  border: none;
+  background-color: transparent;
+  background-image:
+          radial-gradient(circle at 0 0, rgba($dark-blue,0) 14.5px, $dark-blue 15.5px, $dark-blue 19.5px, rgba($dark-blue,0) 20.5px),
+          radial-gradient(circle at 35px 0, rgba($dark-blue,0) 14.5px, $dark-blue 15.5px, $dark-blue 19.5px, rgba($dark-blue,0) 20.5px);
+  background-size: 35px 20px;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  text-transform: lowercase;
+  font-style: italic;
+  color: $dark-blue;
+  filter: drop-shadow(0 1px 1px rgba(black,.15));
+  overflow: visible;
+
+  &:before {
+    width: 50%;
+    border-top: 5px solid $dark-blue;
+    border-left: 1px solid transparent; /* play with this until you like the look of it */
+    border-top-left-radius: 20% 30px;
+    height: 100%;
+    content: "";
+    position: absolute; top: 20px; left: -15px;
+    box-sizing: border-box;
+    margin-top: -5px;
+  }
+
+  &:after {
+    width: 50%;
+    border-top: 5px solid $dark-blue;
+    border-right: 1px solid transparent; /* play with this until you like the look of it */
+    border-top-right-radius: 20% 30px;
+    height: 100%;
+    content: "";
+    position: absolute; top: 20px; right: -15px;
+    box-sizing: border-box;
+    margin-top: -5px;
+  }
 }

@@ -14,6 +14,17 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
+    // Make assets available in public directory for twig to access them
+    .copyFiles({
+        from: './assets/images',
+
+    // if versioning is enabled, add the file hash too
+        to: 'images/[path][name].[hash:8].[ext]'
+
+    // only copy files matching this pattern
+     //pattern: /\.(png|jpg|jpeg)$/
+     })
+
     /*
      * ENTRY CONFIG
      *
@@ -24,6 +35,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('index', './assets/js/index.js')
+    //.addStyleEntry('common_styles', './assets/css/main.scss')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

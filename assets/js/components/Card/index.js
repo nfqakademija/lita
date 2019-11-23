@@ -6,7 +6,7 @@ class Card extends PureComponent {
     render() {
         const { academy } = this.props;
         return (
-            <div className="card promoting-card row flex-row">
+            <div className="card promoting-card flex-wrap flex-row academy-card academy-card--shadow">
                     <div className="col-lg-8 card-body d-flex flex-row p-3">
                         <img src={academy.academy_logo} className="logo rounded-circle mr-3" alt="..." />
                         <div>
@@ -29,7 +29,7 @@ class Card extends PureComponent {
                                 <i className="fa fa-map-marker  pr-1" aria-hidden="true" />Vilnius
                             </div>
                         </div>
-                        <div className="align-self-end">
+                        <div className="d-flex flex-column align-items-end">
                             <div>
                                 <a href="mailto:test@test.com" className="card-email"><i className="fa fa-envelope-o pr-1" aria-hidden="true" />{academy.academy_email}</a>
                             </div>
