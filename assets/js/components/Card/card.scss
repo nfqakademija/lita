@@ -16,3 +16,11 @@
 .card-right {
   background-color: $bg_dark_grey;
 }
+
+.academy-card {
+  &--shadow {
+    box-shadow:
+      6px 6px 0 0 #ddd,
+      12px 12px 0 0 #ccc;
+  }
+}
