@@ -1,0 +1,16 @@
+@import "../../../css/variables";
+
+.filter-label {
+  font-size: 1.5rem;
+}
+
+.filter-toggle {
+  color: $white;
+  background-color: $dark-blue;
+  border-color: $dark-blue;
+  min-width: 160px;
+
+    &:hover {
+      color: $white;
+    }
+}
