@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
 use App\Entity\Program;
+use App\Entity\City;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AcademyRepository")
@@ -18,6 +19,12 @@ class Academy
      * @OneToMany(targetEntity="Program", mappedBy="academy", cascade={"remove"})
      */
     private $programs;
+
+    /**
+     * One Academy has many Cities. This is the inverse side.
+     * @OneToMany(targetEntity="City", mappedBy="academy", cascade={"remove"})
+     */
+    private $cities;
 
     public function __construct()
     {
@@ -55,6 +62,11 @@ class Academy
      * @ORM\Column(type="string", length=255)
      */
     private $academy_email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $academy_description;
 
     public function getId(): ?int
     {
@@ -109,6 +121,18 @@ class Academy
         return $this;
     }
 
+    public function setAcademyDescription(string $academy_description): ?string
+    {
+        $this->academy_description = $academy_description;
+
+        return $this;
+    }
+
+    public function getAcademyDescription(): ?string
+    {
+        return $this->academy_description;
+    }
+
     /**
      * @return Collection
      */
@@ -123,5 +147,21 @@ class Academy
     public function setPrograms(ArrayCollection $programs): void
     {
         $this->programs = $programs;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCities(): Collection
+    {
+        return $this->cities;
+    }
+
+    /**
+     * @param ArrayCollection $cities
+     */
+    public function setCities(ArrayCollection $cities): void
+    {
+        $this->cities = $cities;
     }
 }
