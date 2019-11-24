@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\AcademyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Academy;
 
@@ -15,8 +17,8 @@ class AcademiesController extends AbstractController
      * @return JsonResponse
      *
      * @Route(
-     *     "/api/v1/academy/{id}",
-     *     name="academy",
+     *     "/api/v1/academies",
+     *     name="academies",
      *     methods={"GET"}
      * )
      */
@@ -39,6 +41,7 @@ class AcademiesController extends AbstractController
                 'academy_email' => $academy->getAcademyEmail(),
                 'academy_url' => $academy->getAcademyUrl(),
                 'academy_logo' => $academy->getAcademyLogo(),
+                'academy_description' => $academy->getAcademyDescription(),
             );
         }
 
@@ -47,7 +50,6 @@ class AcademiesController extends AbstractController
             JsonResponse::HTTP_OK
         );
     }
-
 
     /**
      * Returns academy selected by the id.
@@ -72,6 +74,36 @@ class AcademiesController extends AbstractController
             return new JsonResponse("There is no academy with id of: " . $id, Response::HTTP_NOT_FOUND);
         }
 
+        //Academies Info
+        $programsArray = array();
+        foreach ($academy->getPrograms() as $program) {
+            $programsArray[] = $program->getProgramName();
+        }
+
+        $priceArray = array();
+        foreach ($academy->getPrograms() as $price) {
+            $priceArray[] = $price->getProgramPrice();
+        }
+
+        $programs = new \stdClass();
+        $programs->academy_programs = $programsArray;
+        $programs->program_prices = $priceArray;
+
+        //Cities Info
+        $citiesArray = array();
+        foreach ($academy->getCities() as $city) {
+            $citiesArray[] = $city->getCity();
+        }
+
+        $addressArray = array();
+        foreach ($academy->getCities() as $address) {
+            $addressArray[] = $address->getCityAddress();
+        }
+
+        $cities = new \stdClass();
+        $cities->cities = $citiesArray;
+        $cities->addresses = $addressArray;
+
         return new JsonResponse(
             array(
                 'academy_id' => $academy->getId(),
@@ -79,6 +111,9 @@ class AcademiesController extends AbstractController
                 'academy_email' => $academy->getAcademyEmail(),
                 'academy_url' => $academy->getAcademyUrl(),
                 'academy_logo' => $academy->getAcademyLogo(),
+                'academy_description' => $academy->getAcademyDescription(),
+                'academy_programs' => $programs,
+                'academy_cities' => $cities,
             ),
             JsonResponse::HTTP_OK
         );

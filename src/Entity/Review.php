@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Entity\Consumer;
+use App\Entity\Program;
 use App\Entity\ProgramEvent;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -21,6 +22,13 @@ class Review
      * @OneToMany(targetEntity="ProgramEvent", mappedBy="reviews", cascade={"remove"})
      */
     private $reviews;
+
+    /**
+     * Many Reviews have one Program. This is the owning side.
+     * @ManyToOne(targetEntity="Program", inversedBy="reviews")
+     * @JoinColumn(name="program_id", referencedColumnName="id")
+     */
+    private $programs;
 
     public function __construct()
     {
@@ -138,5 +146,21 @@ class Review
     public function setConsumer($consumer): void
     {
         $this->consumer = $consumer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProgram()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param $programs
+     */
+    public function setProgram($programs): void
+    {
+        $this->programs = $programs;
     }
 }
