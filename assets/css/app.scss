@@ -1,20 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif:700|Questrial&display=swap');
 
-// customize some variables
-$bg_dark_grey: #eae8ea;
-$bg_grey: #f9f9f7;
-$bg_about: #dee3ec;
-$primary-font: 'Noto Serif', serif;
-$secondary-font: 'Questrial', sans-serif;
-$dark-blue: #2a3365;
-$primary-button-color: #2929b5;
-$white: #ffffff;
-$black: #000000;
-$shadow-color: #def7fe;
-
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 @import '~font-awesome/scss/font-awesome';
+
+@import "variables";
 
 body {
   background-color: $white;
@@ -80,33 +70,15 @@ body {
   }
 }
 
-.btn {
-  position: relative;
-  z-index: 1;
-  transition-delay: 0.2s !important;
-  transition: color 0.5s ease-in-out;
-  overflow: hidden;
-  font-family: 'Oswald', sans-serif;
-  font-size: 1.125rem;;
-  line-height: 20px;
-  letter-spacing: 0;
-  text-align: center;
-  text-decoration: none;
-  outline: 0;
-  white-space: nowrap;
-  -webkit-appearance: none;
-  user-select: none;
-  padding: .5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid;
+.btn-blue {
   color: $white;
-}
-
-.btn-primary {
   background-color: $primary-button-color;
   border-color: $primary-button-color;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.125rem;
 
   &:hover {
+    color: $white;
     background-color: $dark-blue;
     box-shadow: 0 8px 32px $shadow-color;
   }

@@ -60,9 +60,11 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {}, {
+    .configureBabel((babelConfig) => {
+        babelConfig.plugins.push('@babel/plugin-proposal-class-properties')
+    }, {
         useBuiltIns: 'usage',
-        corejs: 3
+        corejs: 3,
     })
 
     // enables Sass/SCSS support
