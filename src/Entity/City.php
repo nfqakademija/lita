@@ -74,7 +74,8 @@ class City
 
     public function setCityAddress(string $city_address): ?string
     {
-        return $this->city_address;
+        $this->city_address = $city_address;
+        return $this;
     }
 
     public function getCityAddress(): ?string
