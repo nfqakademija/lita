@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
+use App\Entity\ProgramEvent;
 use App\Repository\AcademyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,11 +40,11 @@ class AcademiesController extends AbstractController
 
         foreach ($academies as $academy) {
             $academiesArray[] = array(
-                'academy_id' => $academy->getId(),
-                'academy_name' => $academy->getAcademyName(),
-                'academy_email' => $academy->getAcademyEmail(),
-                'academy_url' => $academy->getAcademyUrl(),
-                'academy_logo' => $academy->getAcademyLogo(),
+                'academy_id'          => $academy->getId(),
+                'academy_name'        => $academy->getAcademyName(),
+                'academy_email'       => $academy->getAcademyEmail(),
+                'academy_url'         => $academy->getAcademyUrl(),
+                'academy_logo'        => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
             );
         }
@@ -74,48 +78,48 @@ class AcademiesController extends AbstractController
             return new JsonResponse("There is no academy with id of: " . $id, Response::HTTP_NOT_FOUND);
         }
 
-        //Academies Info
-        $programsArray = array();
+        $programsArray = [];
+
         foreach ($academy->getPrograms() as $program) {
-            $programsArray[] = $program->getProgramName();
+                $programsArray[] = [
+                    'academy_program' => [
+                        'program_name'      => $program->getProgramName(),
+                        'program_price'     => $program->getProgramPrice(),
+//                        'program_locations' => $this->formatCitiesToArray($program->getCities()),
+//                        'program_events'    => $this->formatEventsToArray($program->getEvents()),
+                    ]
+                ];
         }
-
-        $priceArray = array();
-        foreach ($academy->getPrograms() as $price) {
-            $priceArray[] = $price->getProgramPrice();
-        }
-
-        $programs = new \stdClass();
-        $programs->academy_programs = $programsArray;
-        $programs->program_prices = $priceArray;
-
-        //Cities Info
-        $citiesArray = array();
-        foreach ($academy->getCities() as $city) {
-            $citiesArray[] = $city->getCity();
-        }
-
-        $addressArray = array();
-        foreach ($academy->getCities() as $address) {
-            $addressArray[] = $address->getCityAddress();
-        }
-
-        $cities = new \stdClass();
-        $cities->cities = $citiesArray;
-        $cities->addresses = $addressArray;
 
         return new JsonResponse(
             array(
-                'academy_id' => $academy->getId(),
-                'academy_name' => $academy->getAcademyName(),
-                'academy_email' => $academy->getAcademyEmail(),
-                'academy_url' => $academy->getAcademyUrl(),
-                'academy_logo' => $academy->getAcademyLogo(),
+                'academy_id'          => $academy->getId(),
+                'academy_name'        => $academy->getAcademyName(),
+                'academy_email'       => $academy->getAcademyEmail(),
+                'academy_url'         => $academy->getAcademyUrl(),
+                'academy_logo'        => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
-                'academy_programs' => $programs,
-                'academy_cities' => $cities,
+                'academy_programs'    => $programsArray,
             ),
             JsonResponse::HTTP_OK
         );
+    }
+
+    protected function formatCitiesToArray(City $city)
+    {
+        $citiesAddressArray = [];
+
+        $citiesAddressArray['city'] = $city->getCity();
+        $citiesAddressArray['address'] = $city->getCityAddress();
+
+        return $citiesAddressArray;
+    }
+
+    protected function formatEventsToArray(ProgramEvent $event): array
+    {
+        return [
+            'start_date' => $event->getProgramStart()->format('Y-m-d'),
+            'end_date' => $event->getProgramEnd()->format('Y-m-d'),
+        ];
     }
 }
