@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Dto\FiltersData;
 use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Program|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +23,46 @@ class ProgramRepository extends ServiceEntityRepository
         parent::__construct($registry, Program::class);
     }
 
-    // /**
-    //  * @return Program[] Returns an array of Program objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param FiltersData $filtersData
+     * @return Collection
+     */
+    public function filterPrograms(FiltersData $filtersData)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->createQuerywithFiltersApplied($filtersData);
 
-    /*
-    public function findOneBySomeField($value): ?Program
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query
+            ->setMaxResults($filtersData->getPageSize())
+            ->setFirstResult($filtersData->getPageSize() * ($filtersData->getPage()-1));
+
+        return $query->getQuery()->getResult();
     }
-    */
+
+    /**
+     * @param FiltersData $filtersData
+     * @return QueryBuilder
+     */
+    protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
+    {
+        $query = $this->createQueryBuilder('p');
+        if ($filtersData->getProgramName()) {
+            $query->andWhere('p.program_name = :program_name')
+                ->setParameter('program_name', $filtersData->getProgramName());
+        }
+        return $query;
+    }
+
+    /**
+     * @param FiltersData $filtersData
+     * @return int
+     */
+    public function countMatchingPrograms(FiltersData $filtersData): int
+    {
+        try {
+            $query = $this->createQueryWithFiltersApplied($filtersData);
+            return (int)count($query->getQuery()->getResult());
+        } catch (\Throwable $e) {
+            return 0;
+        }
+    }
 }
