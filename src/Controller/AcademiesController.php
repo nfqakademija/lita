@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\ProgramEvent;
-use App\Repository\AcademyRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,14 +83,15 @@ class AcademiesController extends AbstractController
                     'academy_program' => [
                         'program_name'      => $program->getProgramName(),
                         'program_price'     => $program->getProgramPrice(),
-//                        'program_locations' => $this->formatCitiesToArray($program->getCities()),
-//                        'program_events'    => $this->formatEventsToArray($program->getEvents()),
+                        'program_review'    => $this->getReviews(),
+                        'program_locations' => $this->getLocations(),
+                        'program_dates'     => $this->getDates(),
                     ]
                 ];
         }
 
         return new JsonResponse(
-            array(
+            array (
                 'academy_id'          => $academy->getId(),
                 'academy_name'        => $academy->getAcademyName(),
                 'academy_email'       => $academy->getAcademyEmail(),
@@ -105,21 +104,49 @@ class AcademiesController extends AbstractController
         );
     }
 
-    protected function formatCitiesToArray(City $city)
+    protected function getReviews(): array
     {
-        $citiesAddressArray = [];
+        $reviews = $this->getDoctrine()
+            ->getRepository(Review::class)
+            ->findAll();
 
-        $citiesAddressArray['city'] = $city->getCity();
-        $citiesAddressArray['address'] = $city->getCityAddress();
-
-        return $citiesAddressArray;
+        foreach ($reviews as $review) {
+            return [
+                'review_stars'       => $review->getReviewStars(),
+                'review_comment'     => $review->getReviewComment(),
+            ];
+        }
     }
 
-    protected function formatEventsToArray(ProgramEvent $event): array
+    protected function getLocations(): array
     {
-        return [
-            'start_date' => $event->getProgramStart()->format('Y-m-d'),
-            'end_date' => $event->getProgramEnd()->format('Y-m-d'),
-        ];
+        $locations = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->findAll();
+
+        foreach ($locations as $location) {
+            return [
+                'program_locations' => [
+                    'program_city'        => $location->getCity(),
+                    'program_address'     => $location->getCityAddress(),
+                ]
+            ];
+        }
+    }
+
+    protected function getDates(): array
+    {
+        $dates = $this->getDoctrine()
+            ->getRepository(ProgramEvent::class)
+            ->findAll();
+
+        foreach ($dates as $date) {
+            return [
+                'program_dates' => [
+                    'program_start_date'      => $date->getProgramStart()->format('Y-m-d'),
+                    'program_end_date'        => $date->getProgramEnd()->format('Y-m-d'),
+                ]
+            ];
+        }
     }
 }

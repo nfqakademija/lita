@@ -19,22 +19,18 @@ class ProgramEventRepository extends ServiceEntityRepository
         parent::__construct($registry, ProgramEvent::class);
     }
 
-    // /**
-    //  * @return ProgramEvent[] Returns an array of ProgramEvent objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return ProgramEvent[] Returns an array of ProgramEvent objects
+      */
+    public function findClosesDate()
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('d')
+            ->where('d.program_start > CURRENT_TIMESTAMP()')
+            ->orderBy('d.program_start', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?ProgramEvent

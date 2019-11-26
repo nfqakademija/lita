@@ -6,8 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\ProgramEvent;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
@@ -20,13 +18,6 @@ class City
      * @OneToMany(targetEntity="ProgramEvent", mappedBy="cities", cascade={"remove"})
      */
     private $events;
-
-    /**
-     * Many Cities have one Academy. This is the owning side.
-     * @ManyToOne(targetEntity="Academy", inversedBy="cities")
-     * @JoinColumn(name="academy_id", referencedColumnName="id")
-     */
-    private $academy;
 
     public function __construct()
     {
@@ -97,21 +88,5 @@ class City
     public function setEvents(ArrayCollection $events): void
     {
         $this->events = $events;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAcademy()
-    {
-        return $this->academy;
-    }
-
-    /**
-     * @param mixed $academy
-     */
-    public function setAcademy($academy): void
-    {
-        $this->academy = $academy;
     }
 }
