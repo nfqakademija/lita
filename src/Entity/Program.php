@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Entity\Academy;
-use App\Entity\Review;
 use App\Entity\ProgramEvent;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -22,12 +21,6 @@ class Program
      * @OneToMany(targetEntity="ProgramEvent", mappedBy="programs", cascade={"remove"})
      */
     private $events;
-
-    /**
-     * One Program has many Reviews. This is the inverse side.
-     * @OneToMany(targetEntity="Review", mappedBy="programs", cascade={"remove"})
-     */
-    private $reviews;
 
     public function __construct()
     {
@@ -122,22 +115,6 @@ class Program
     public function setEvents(ArrayCollection $events): void
     {
         $this->events = $events;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
-
-    /**
-     * @param ArrayCollection $reviews
-     */
-    public function setReviews(ArrayCollection $reviews): void
-    {
-        $this->reviews = $reviews;
     }
 
     /**
