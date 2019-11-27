@@ -11,7 +11,6 @@
           archive_path: ../project.tar.gz
           linked_files: # <-- Common place to add your files, that should be reused between deployments
               - .env.local
-          linked_files: # <-- Common place to add your files, that should be reused between deployments
               - .env
           linked_directories: # <-- Common place to add your files, that should be reused between deployments
               - var/log
