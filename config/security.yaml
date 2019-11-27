@@ -1,0 +1,14 @@
+# config/packages/security.yaml
+security:
+  # ...
+  providers:
+    fos_userbundle:
+      id: fos_user.user_provider.username_email
+  firewalls:
+    # ...
+    main:
+      # ...
+      guard:
+        provider: fos_userbundle
+        authenticators:
+          - App\Security\GoogleAuthenticator

@@ -21,6 +21,11 @@ class ProgramEvent
      * @ManyToOne(targetEntity="City", inversedBy="program_events", cascade={"remove"})
      * @JoinColumn(name="city_id", referencedColumnName="id")
      */
+
+
+
+
+
     private $cities;
 
     /**
