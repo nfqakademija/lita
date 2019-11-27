@@ -39,8 +39,11 @@ class GoogleAuthenticator extends SocialAuthenticator
      * @param EntityManagerInterface $em
      * @param UserManagerInterface $userManager
      */
-    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, UserManagerInterface $userManager)
-    {
+    public function __construct(
+        ClientRegistry $clientRegistry,
+        EntityManagerInterface $em,
+        UserManagerInterface $userManager
+    ) {
         $this->clientRegistry = $clientRegistry;
         $this->em = $em;
         $this->userManager = $userManager;
@@ -158,3 +161,4 @@ class GoogleAuthenticator extends SocialAuthenticator
         );
     }
 }
+
