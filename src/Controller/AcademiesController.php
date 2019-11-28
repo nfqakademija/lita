@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\Program;
 use App\Entity\ProgramEvent;
 use App\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,9 +84,10 @@ class AcademiesController extends AbstractController
                     'academy_program' => [
                         'program_name'      => $program->getProgramName(),
                         'program_price'     => $program->getProgramPrice(),
-                        'program_review'    => $this->getReviews(),
-                        'program_locations' => $this->getLocations(),
-                        'program_dates'     => $this->getDates(),
+                        'program_reviews'   => $this->getReviews(),
+                        'program_cities'    => $this->getCities(),
+                        'program_addresses' => $this->getAddresses(),
+                        'program_dates'     => $this->getDates($program->getEvents()),
                     ]
                 ];
         }
@@ -104,48 +106,73 @@ class AcademiesController extends AbstractController
         );
     }
 
-    protected function getReviews(): array
+    protected function getProgramPrices()
+    {
+        $reviews = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findAll();
+
+        $reviewsArray = [];
+
+        foreach ($reviews as $review) {
+            $reviewsArray[] = $review->getReviewStars();
+        }
+
+        return $reviewsArray;
+    }
+
+    protected function getReviews()
     {
         $reviews = $this->getDoctrine()
             ->getRepository(Review::class)
             ->findAll();
 
+        $reviewsArray = [];
+
         foreach ($reviews as $review) {
-            return [
-                'review_stars'       => $review->getReviewStars(),
-                'review_comment'     => $review->getReviewComment(),
-            ];
+            $reviewsArray[] = $review->getReviewStars();
         }
+
+        return $reviewsArray;
     }
 
-    protected function getLocations(): array
+    protected function getCities()
     {
         $locations = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
 
+        $citiesArray = [];
+
         foreach ($locations as $location) {
-            return [
-                'program_locations' => [
-                    'program_city'        => $location->getCity(),
-                    'program_address'     => $location->getCityAddress(),
-                ]
-            ];
+            $citiesArray[] = $location->getCity();
         }
+
+        return $citiesArray;
     }
 
-    protected function getDates(): array
+    protected function getAddresses()
     {
-        $dates = $this->getDoctrine()
-            ->getRepository(ProgramEvent::class)
+        $locations = $this->getDoctrine()
+            ->getRepository(City::class)
             ->findAll();
 
-        foreach ($dates as $date) {
+        $addressArray = [];
+
+        foreach ($locations as $location) {
+            $addressArray[] = $location->getCityAddress();
+        }
+
+        return $addressArray;
+    }
+
+    protected function getDates(array $programEvents)
+    {
+        /** @var ProgramEvent $event */
+        foreach ($programEvents as $event) {
             return [
-                'program_dates' => [
-                    'program_start_date'      => $date->getProgramStart()->format('Y-m-d'),
-                    'program_end_date'        => $date->getProgramEnd()->format('Y-m-d'),
-                ]
+                'program_start_date'      => $event->getProgramEnd()->format('Y-m-d'),
+                'program_end_date'        => $event->getProgramEnd()->format('Y-m-d'),
             ];
         }
     }
