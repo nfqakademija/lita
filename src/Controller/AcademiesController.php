@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\City;
-use App\Entity\Program;
 use App\Entity\ProgramEvent;
-use App\Entity\Review;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

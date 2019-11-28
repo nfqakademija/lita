@@ -3,12 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
-use App\Entity\Review;
-use App\Entity\Program;
-use App\Entity\City;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
