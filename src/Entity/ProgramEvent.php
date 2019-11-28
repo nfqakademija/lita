@@ -63,6 +63,11 @@ class ProgramEvent
      */
     private $program_location;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $program_address;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -118,6 +123,17 @@ class ProgramEvent
     public function setCities($cities): void
     {
         $this->cities = $cities;
+    }
+
+    public function setProgramAddress(string $program_address): ?string
+    {
+        $this->program_address = $program_address;
+        return $this;
+    }
+
+    public function getProgramAddress(): ?string
+    {
+        return $this->program_address;
     }
 
     /**

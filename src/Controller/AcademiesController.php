@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Program;
 use App\Entity\ProgramEvent;
 use App\Entity\Review;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class AcademiesController extends AbstractController
      *     methods={"GET"}
      * )
      */
-    public function getAcademies()
+    public function index()
     {
         $academies = $this->getDoctrine()
             ->getRepository(Academy::class)
@@ -82,11 +83,12 @@ class AcademiesController extends AbstractController
         foreach ($academy->getPrograms() as $program) {
                 $programsArray[] = [
                     'academy_program' => [
+                        'program_id'        => $program->getId(),
                         'program_name'      => $program->getProgramName(),
                         'program_price'     => $program->getProgramPrice(),
-                        'program_reviews'   => $this->getReviews(),
-                        'program_cities'    => $this->getCities(),
-                        'program_addresses' => $this->getAddresses(),
+                        'program_locations' => $this->getProgramLocations($program->getEvents()),
+                        'program_address '  => $this->getProgramAddress($program->getEvents()),
+                        'program_reviews'   => $this->getProgramReviews($program->getEvents()),
                         'program_dates'     => $this->getDates($program->getEvents()),
                     ]
                 ];
@@ -106,74 +108,54 @@ class AcademiesController extends AbstractController
         );
     }
 
-    protected function getProgramPrices()
+    protected function getDates(Collection $programEvents): array
     {
-        $reviews = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findAll();
+        /** @var ProgramEvent $event */
+        $datesArray = [];
 
-        $reviewsArray = [];
-
-        foreach ($reviews as $review) {
-            $reviewsArray[] = $review->getReviewStars();
+        foreach ($programEvents as $event) {
+            $datesArray[] = [
+                    'program_start_date' => $event->getProgramStart()->format('Y-m-d'),
+                    'program_end_date'   => $event->getProgramEnd()->format('Y-m-d'),
+                ];
         }
 
-        return $reviewsArray;
+        return $datesArray;
     }
 
-    protected function getReviews()
+    protected function getProgramLocations(Collection $programEvents): array
     {
-        $reviews = $this->getDoctrine()
-            ->getRepository(Review::class)
-            ->findAll();
+        /** @var ProgramEvent $location */
+        $locationsArray = [];
 
-        $reviewsArray = [];
-
-        foreach ($reviews as $review) {
-            $reviewsArray[] = $review->getReviewStars();
+        foreach ($programEvents as $location) {
+            $locationsArray[] = $location->getProgramLocation();
         }
 
-        return $reviewsArray;
+        return $locationsArray;
     }
 
-    protected function getCities()
+    protected function getProgramAddress(Collection $programEvents): array
     {
-        $locations = $this->getDoctrine()
-            ->getRepository(City::class)
-            ->findAll();
-
-        $citiesArray = [];
-
-        foreach ($locations as $location) {
-            $citiesArray[] = $location->getCity();
-        }
-
-        return $citiesArray;
-    }
-
-    protected function getAddresses()
-    {
-        $locations = $this->getDoctrine()
-            ->getRepository(City::class)
-            ->findAll();
-
+        /** @var ProgramEvent $address */
         $addressArray = [];
 
-        foreach ($locations as $location) {
-            $addressArray[] = $location->getCityAddress();
+        foreach ($programEvents as $address) {
+            $addressArray[] = $address->getProgramAddress();
         }
 
         return $addressArray;
     }
 
-    protected function getDates(array $programEvents)
+    protected function getProgramReviews(Collection $programEvents): array
     {
-        /** @var ProgramEvent $event */
-        foreach ($programEvents as $event) {
-            return [
-                'program_start_date'      => $event->getProgramEnd()->format('Y-m-d'),
-                'program_end_date'        => $event->getProgramEnd()->format('Y-m-d'),
-            ];
+        /** @var ProgramEvent $review */
+        $reviewsArray = [];
+
+        foreach ($programEvents as $review) {
+            $reviewsArray[] = $review->getReviews()->getReviewStars();
         }
+
+        return $reviewsArray;
     }
 }
