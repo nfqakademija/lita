@@ -63,17 +63,6 @@ class City
         return $this;
     }
 
-    public function setCityAddress(string $city_address): ?string
-    {
-        $this->city_address = $city_address;
-        return $this;
-    }
-
-    public function getCityAddress(): ?string
-    {
-        return $this->city_address;
-    }
-
     /**
      * @return Collection
      */
