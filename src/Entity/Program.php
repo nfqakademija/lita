@@ -7,8 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use App\Entity\Academy;
-use App\Entity\ProgramEvent;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
