@@ -22,10 +22,6 @@ class ProgramEvent
      * @JoinColumn(name="city_id", referencedColumnName="id")
      */
 
-
-
-
-
     private $cities;
 
     /**

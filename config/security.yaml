@@ -9,5 +9,6 @@ security:
     main:
       # ...
       guard:
+        provider: fos_userbundle
         authenticators:
           - App\Security\GoogleAuthenticator
