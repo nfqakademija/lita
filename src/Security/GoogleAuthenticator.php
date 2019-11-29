@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Consumer;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -12,41 +13,22 @@ use League\OAuth2\Client\Provider\GoogleUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class GoogleAuthenticator extends SocialAuthenticator
 {
-    /**
-     * @var ClientRegistry
-     */
     private $clientRegistry;
-
-    /**
-     * @var EntityManagerInterface
-     */
     private $em;
+    private $router;
 
-    /**
-     * @var UserManagerInterface
-     */
-    private $userManager;
-
-    /**
-     * GoogleAuthenticator constructor.
-     * @param ClientRegistry $clientRegistry
-     * @param EntityManagerInterface $em
-     * @param UserManagerInterface $userManager
-     */
-    public function __construct(
-        ClientRegistry $clientRegistry,
-        EntityManagerInterface $em,
-        UserManagerInterface $userManager
-    ) {
+    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
+    {
         $this->clientRegistry = $clientRegistry;
         $this->em = $em;
-        $this->userManager = $userManager;
+        $this->router = $router;
     }
 
     /**
@@ -77,6 +59,8 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        var_dump($credentials);
+        exit;
         /** @var GoogleUser $googleUser */
         $googleUser = $this->getGoogleClient()
             ->fetchUserFromToken($credentials);
@@ -84,33 +68,35 @@ class GoogleAuthenticator extends SocialAuthenticator
         $email = $googleUser->getEmail();
 
         // 1) have they logged in with Google before? Easy!
-        $existingUser = $this->em->getRepository(User::class)
+        $existingUser = $this->em->getRepository(Consumer::class)
             ->findOneBy(['googleId' => $googleUser->getId()]);
 
         if ($existingUser) {
             $user = $existingUser;
         } else {
             // 2) do we have a matching user by email?
-            $user = $this->em->getRepository(User::class)
+            $user = $this->em->getRepository(Consumer::class)
                 ->findOneBy(['email' => $email]);
 
             if (!$user) {
-                /** @var User $user */
-                $user = $this->userManager->createUser();
-                $user->setEnabled(true);
-                $user->setEmail($email);
-                $user->setUsername("your chosen username");
-                $user->setPlainPassword("your chosen password");
+                $user = new Consumer();
+                $user->setGoogleId($googleUser);
+                $user->setConsumerEmail($email);
+                $user->setConsumerName("your chosen username");
+//                $user->setPlainPassword("your chosen password");
             }
         }
 
         // 3) Maybe you just want to "register" them by creating
         // a User object
-        $user->setGoogleId($googleUser->getId());
-        $this->userManager->updateUser($user);
 
-        return $userProvider->loadUserByUsername($user->getUsername());
+        $user->setGoogleId($googleUser->getId());
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
     }
+
 
     /**
      * @return GoogleClient
@@ -128,8 +114,13 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // on success, let the request continue
-        return null;
+        // change "app_homepage" to some route in your app
+        $targetUrl = $this->router->generate('home');
+
+        return new RedirectResponse($targetUrl);
+
+        // or, on success, let the request continue to be handled by the controller
+        //return null;
     }
 
     /**
@@ -161,4 +152,3 @@ class GoogleAuthenticator extends SocialAuthenticator
         );
     }
 }
-

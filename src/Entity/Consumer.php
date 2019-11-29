@@ -56,6 +56,29 @@ class Consumer
      */
     private $consumer_password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $googleId;
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId): void
+    {
+        $this->googleId = $googleId;
+    }
+
+
+
     public function getId(): ?int
     {
         return $this->id;
