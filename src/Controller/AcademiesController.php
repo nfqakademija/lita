@@ -79,15 +79,13 @@ class AcademiesController extends AbstractController
 
         foreach ($academy->getPrograms() as $program) {
                 $programsArray[] = [
-                    'academy_program' => [
-                        'program_id'        => $program->getId(),
-                        'program_name'      => $program->getProgramName(),
-                        'program_price'     => $program->getProgramPrice(),
-                        'program_locations' => $this->getProgramLocations($program->getEvents()),
-                        'program_address '  => $this->getProgramAddress($program->getEvents()),
-                        'program_reviews'   => $this->getProgramReviews($program->getEvents()),
-                        'program_dates'     => $this->getDates($program->getEvents()),
-                    ]
+                        'program_id'            => $program->getId(),
+                        'program_name'          => $program->getProgramName(),
+                        'program_price'         => $program->getProgramPrice(),
+                        'program_locations'     => $this->getProgramLocations($program->getEvents()),
+                        'program_address '      => $this->getProgramAddress($program->getEvents()),
+                        'program_reviews'       => $this->getProgramReviews($program->getEvents()),
+                        'program_dates'         => $this->getDates($program->getEvents()),
                 ];
         }
 
