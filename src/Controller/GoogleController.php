@@ -1,13 +1,12 @@
 <?php
+Namespace App\Controller;
 
-namespace App\Controller;
-​
-use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-​
+    use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+    use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
+
 class GoogleController extends AbstractController
 {
     /**
@@ -27,7 +26,7 @@ class GoogleController extends AbstractController
             ])
             ;
     }
-​
+
     /**
      * After going to Google, you're redirected back here
      * because this is the "redirect_route" you configured
