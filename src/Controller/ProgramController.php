@@ -68,7 +68,7 @@ class ProgramController extends AbstractController
             ->find($id);
 
         if ($program === null) {
-            return new JsonResponse("There is no academy with id of: " . $id, Response::HTTP_NOT_FOUND);
+            return new JsonResponse("There is no programs with id of: " . $id, Response::HTTP_NOT_FOUND);
         }
 
         $reviewsArray = array();
