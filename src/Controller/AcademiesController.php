@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Program;
 use App\Entity\ProgramEvent;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,6 +37,11 @@ class AcademiesController extends AbstractController
         $academiesArray = array();
 
         foreach ($academies as $academy) {
+            $minProgramPriceByAcademy = $this
+                ->getDoctrine()
+                ->getRepository(Program::class)
+                ->findMinPriceByAcademy($academy->getId());
+
             $academiesArray[] = array(
                 'academy_id'          => $academy->getId(),
                 'academy_name'        => $academy->getAcademyName(),
@@ -43,6 +49,7 @@ class AcademiesController extends AbstractController
                 'academy_url'         => $academy->getAcademyUrl(),
                 'academy_logo'        => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
+                'academy_price'   => $minProgramPriceByAcademy[0],
             );
         }
 
