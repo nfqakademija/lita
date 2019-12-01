@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
-use App\Entity\Program;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AcademyRepository")
@@ -55,6 +54,11 @@ class Academy
      * @ORM\Column(type="string", length=255)
      */
     private $academy_email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $academy_description;
 
     public function getId(): ?int
     {
@@ -107,6 +111,18 @@ class Academy
         $this->academy_email = $academy_email;
 
         return $this;
+    }
+
+    public function setAcademyDescription(string $academy_description): ?string
+    {
+        $this->academy_description = $academy_description;
+
+        return $this;
+    }
+
+    public function getAcademyDescription(): ?string
+    {
+        return $this->academy_description;
     }
 
     /**

@@ -3,12 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
-use App\Entity\Review;
-use App\Entity\Program;
-use App\Entity\City;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
@@ -16,6 +11,10 @@ use Doctrine\ORM\Mapping\ManyToOne;
  */
 class ProgramEvent
 {
+    public function __toString()
+    {
+        return $this->program_location;
+    }
     /**
      * Many features have one product. This is the owning side.
      * @ManyToOne(targetEntity="City", inversedBy="program_events", cascade={"remove"})
@@ -58,6 +57,11 @@ class ProgramEvent
      * @ORM\Column(type="string", length=255)
      */
     private $program_location;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $program_address;
 
     public function getId(): ?int
     {
@@ -114,6 +118,17 @@ class ProgramEvent
     public function setCities($cities): void
     {
         $this->cities = $cities;
+    }
+
+    public function setProgramAddress(string $program_address): ?string
+    {
+        $this->program_address = $program_address;
+        return $this;
+    }
+
+    public function getProgramAddress(): ?string
+    {
+        return $this->program_address;
     }
 
     /**
