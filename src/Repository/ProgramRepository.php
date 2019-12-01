@@ -7,7 +7,6 @@ use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -30,11 +29,6 @@ class ProgramRepository extends ServiceEntityRepository
     public function filterPrograms(FiltersData $filtersData)
     {
         $query = $this->createQuerywithFiltersApplied($filtersData);
-
-        $query
-            ->setMaxResults($filtersData->getPageSize())
-            ->setFirstResult($filtersData->getPageSize() * ($filtersData->getPage()-1));
-
         return $query->getQuery()->getResult();
     }
 
@@ -45,6 +39,7 @@ class ProgramRepository extends ServiceEntityRepository
     protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
     {
         $query = $this->createQueryBuilder('p');
+
         if ($filtersData->getProgramName()) {
             $query->andWhere('p.program_name = :program_name')
                 ->setParameter('program_name', $filtersData->getProgramName());
@@ -60,6 +55,7 @@ class ProgramRepository extends ServiceEntityRepository
     {
         try {
             $query = $this->createQueryWithFiltersApplied($filtersData);
+
             return (int)count($query->getQuery()->getResult());
         } catch (\Throwable $e) {
             return 0;
