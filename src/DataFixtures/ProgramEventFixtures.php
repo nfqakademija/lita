@@ -17,6 +17,7 @@ class ProgramEventFixtures extends Fixture
             $programEvent->setProgramStart(DateTime::createFromFormat('U', time()));
             $programEvent->setProgramEnd(DateTime::createFromFormat('U', time()));
             $programEvent->setProgramLocation('Vilnius');
+            $programEvent->setProgramAddress('Rinktinės g. 5, LT-09234 Vilnius');
             $manager->persist($programEvent);
             $manager->flush();
         }

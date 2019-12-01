@@ -60,4 +60,15 @@ class City
     {
         $this->events = $events;
     }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+        return $this;
+    }
 }

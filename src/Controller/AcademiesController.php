@@ -148,7 +148,7 @@ class AcademiesController extends AbstractController
         $reviewsArray = [];
 
         foreach ($programEvents as $review) {
-            $reviewsArray[] = $review->getReviews()->getReviewStars();
+            $reviewsArray[] = $review->getReviews();
         }
 
         return $reviewsArray;
