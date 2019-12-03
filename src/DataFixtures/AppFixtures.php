@@ -30,8 +30,8 @@ class AppFixtures extends Fixture
                     'Lenkijoje bei kitose šalyse.',
             ],
             [
-                'academy_name' => '„Telia“ IT akademija',
-                'academy_email' => 'info@nfq.com',
+                'academy_name' => 'Telia“ IT akademija',
+                'academy_email' => 'info@telia.com',
                 'academy_url' => 'https://www.telia.lt/it-akademija',
                 'academy_logo' => 'https://www.telia.lt/_ui/responsive/theme-teo/images/telia-logo.svg',
                 'academy_description' => 'Tapk IT profesionalu kartu su „Telia“ IT akademija“. Daugiau nei 4 ' .
