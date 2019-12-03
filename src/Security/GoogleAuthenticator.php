@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Consumer;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
@@ -33,11 +34,7 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     private $router;
 
-    /**
-     * GoogleAuthenticator constructor.
-     * @param ClientRegistry $clientRegistry
-     * @param EntityManagerInterface $em
-     */
+
     public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
     {
         $this->clientRegistry = $clientRegistry;
@@ -73,39 +70,44 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+//        var_dump($credentials);
+//        exit;
         /** @var GoogleUser $googleUser */
         $googleUser = $this->getGoogleClient()
             ->fetchUserFromToken($credentials);
 
         $email = $googleUser->getEmail();
 
-        // 1) have they logged in with Facebook before? Easy!
-        $existingUser = $this->em->getRepository(User::class)
+        // 1) have they logged in with Google before? Easy!
+        $existingUser = $this->em->getRepository(Consumer::class)
             ->findOneBy(['googleId' => $googleUser->getId()]);
+
         if ($existingUser) {
-            return $existingUser;
+            $user = $existingUser;
+        } else {
+            // 2) do we have a matching user by email?
+            $user = $this->em->getRepository(Consumer::class)
+                ->findOneBy(['email' => $email]);
+
+            if (!$user) {
+                $user = new Consumer();
+                $user->setGoogleId($googleUser);
+                $user->setConsumerEmail($email);
+                $user->setConsumerName("your chosen username");
+//                $user->setPlainPassword("your chosen password");
+            }
         }
-
-        // 2) do we have a matching user by email?
-        $user = $this->em->getRepository(User::class)
-            ->findOneBy(['email' => $email]);
-
-        if ($user) {
-            return $user;
-        }
-
-        $user = new User();
-        $user->setPassword($googleUser->getEmail());
-        $user->setEmail($googleUser->getEmail());
 
         // 3) Maybe you just want to "register" them by creating
         // a User object
+
         $user->setGoogleId($googleUser->getId());
         $this->em->persist($user);
         $this->em->flush();
 
         return $user;
     }
+
 
     /**
      * @return GoogleClient
@@ -123,9 +125,13 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        // change "app_homepage" to some route in your app
         $targetUrl = $this->router->generate('home');
 
         return new RedirectResponse($targetUrl);
+
+        // or, on success, let the request continue to be handled by the controller
+        //return null;
     }
 
     /**
