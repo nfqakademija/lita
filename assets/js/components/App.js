@@ -16,11 +16,17 @@ class App extends Component {
         this.setState({ academies });
     }
 
+    getAcademiesByFilter = async (city, program, price) => {
+        console.log(city, program, price);
+        const academies = await getAcademies();
+        this.setState({ academies });
+    };
+
     render() {
         const { academies } = this.state;
         return (
             <div className="container">
-                <List academies={academies} />
+                <List academies={academies} filterAcademies={this.getAcademiesByFilter} />
             </div>
         );
     }

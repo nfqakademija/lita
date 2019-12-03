@@ -33,7 +33,7 @@ class Card extends PureComponent {
                             <div className="mt-4 mb-5">
                                 <a href={academy.academy_url} className="card-link">{academy.academy_url}</a>
                             </div>
-                            <button className="btn btn-primary">Skaityti daugiau</button>
+                            <button className="btn btn-blue">Skaityti daugiau</button>
                         </div>
                 </div>
             </div>
