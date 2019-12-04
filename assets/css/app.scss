@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif:700|Questrial&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif:700|Raleway&display=swap&subset=latin-ext');
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
@@ -17,7 +17,7 @@ body {
 
 .nav-item {
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   letter-spacing: .03rem;
 }
@@ -39,7 +39,7 @@ body {
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0;
-  font-size: 3.9em;
+  font-size: 3.9rem;
   font-weight: bold;
 }
 
@@ -49,11 +49,11 @@ body {
   font-family: $secondary-font;
   line-height: 0.8;
   letter-spacing: 0;
-  font-size: 1.9em;
+  font-size: 1.5rem;
 }
 
 .content {
-  font-size: 1.4em;
+  font-size: 1rem;
 }
 
 @media (max-width: 1200px) {
@@ -82,7 +82,7 @@ body {
   background-color: $primary-button-color;
   border-color: $primary-button-color;
   font-family: 'Oswald', sans-serif;
-  font-size: 1.125rem;
+  font-size: 1rem;
 
   &:hover {
     color: $white;

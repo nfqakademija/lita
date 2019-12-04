@@ -16,19 +16,21 @@ class Academy extends Component {
                 <div className="modal-dialog modal-lg academy-modal" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <div className="media">
-                                <img className="mr-3 academy-modal__logo"
-                                     src={academyInfo.academy_logo}
-                                     alt="Generic placeholder image"
-                                />
-                                    <div className="media-body">
-                                        <h5 className="mt-0 modal-title">{academyInfo.academy_name}</h5>
-                                        <small className="mr-3">{academyInfo.academy_email}</small>
-                                        <small>{academyInfo.academy_url}</small>
-                                        <p>
-                                            {academyInfo.academy_description}
-                                        </p>
-                                    </div>
+                            <div className="media row">
+                                <div className="academy-modal__logo-wrapper col-12 col-sm-4 col-md-2">
+                                    <img className="mr-3 academy-modal__logo"
+                                         src={academyInfo.academy_logo}
+                                         alt="Generic placeholder image"
+                                    />
+                                </div>
+                                <div className="media-body col-12 col-sm-8 col-md-10 row">
+                                    <h5 className="mt-0 modal-title col-12">{academyInfo.academy_name}</h5>
+                                    <small className="mr-3 col-12">{academyInfo.academy_email}</small>
+                                    <small className="col-12">{academyInfo.academy_url}</small>
+                                    <p className="col-12 academy-modal__description mt-3">
+                                        {academyInfo.academy_description}
+                                    </p>
+                                </div>
                             </div>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={cleanAcademyInfo}>
                                 <span aria-hidden="true">&times;</span>
