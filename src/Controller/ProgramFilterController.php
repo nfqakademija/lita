@@ -14,10 +14,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ProgramFilterController extends AbstractController
 {
     /**
-     * @Route("program/filter", name="filter")
+     * @Route("/filter", name="filter")
      * @param Request $request
      * @param ProgramListAction $programListAction
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function filter(Request $request, ProgramListAction $programListAction): Response
     {

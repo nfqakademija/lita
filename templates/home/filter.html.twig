@@ -1,12 +1,12 @@
 {% block body %}
     <div class="Filter">
         <h3 class="Title-name">Filtras</h3>
-        <form class="Filter-content" action="/filter/filter">
+        <form class="Filter-content" action="/filter">
             <select class="col-md-4 Select" name="type">
                 <option value="">Select Academy program</option>
-                <option {{ app.request.query.get('program_name') == 'front-end' ? 'selected' : '' }} value="front-end">Front-End</option>
-                <option {{ app.request.query.get('program_name') == 'back-end' ? 'selected' : '' }} value="back-end">Back-End</option>
-                <option {{ app.request.query.get('program_name') == 'testavimas' ? 'selected' : '' }} value="testavimas">Testavimas</option>
+                <option {{ app.request.query.get('program_name') == 'Front-End' ? 'selected' : '' }} value="Front-End">Front-End</option>
+                <option {{ app.request.query.get('program_name') == 'Back-End' ? 'selected' : '' }} value="Back-End">Back-End</option>
+                <option {{ app.request.query.get('program_name') == 'Testavimas' ? 'selected' : '' }} value="Testavimas">Testavimas</option>
             </select>
             <div class="col-md-12 Filter-action">
                 <button type="submit" class="Button Button--primary">Filtruoti</button>

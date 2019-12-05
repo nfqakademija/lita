@@ -19,7 +19,6 @@ class ProgramType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    ''           => '',
                     'Front-End'  => 'Front-End',
                     'Back-End'   => 'Back-End',
                     'Testavimas' => 'Testavimas',

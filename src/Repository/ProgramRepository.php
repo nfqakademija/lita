@@ -29,6 +29,11 @@ class ProgramRepository extends ServiceEntityRepository
     public function filterPrograms(FiltersData $filtersData)
     {
         $query = $this->createQuerywithFiltersApplied($filtersData);
+
+        $query
+            ->setMaxResults($filtersData->getPageSize())
+            ->setFirstResult($filtersData->getPageSize() * ($filtersData->getPage() - 1));
+
         return $query->getQuery()->getResult();
     }
 
@@ -40,10 +45,13 @@ class ProgramRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('p');
 
-        if ($filtersData->getProgramName()) {
-            $query->andWhere('p.program_name = :program_name')
+        if (null !== $filtersData->getProgramName()) {
+            $query
+                ->andWhere('p.program_name  = :program_name')
+//                ->andWhere('p.program_price = :program_price')
                 ->setParameter('program_name', $filtersData->getProgramName());
         }
+
         return $query;
     }
 

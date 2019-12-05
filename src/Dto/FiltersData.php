@@ -9,6 +9,11 @@ class FiltersData
     private $programName;
 
     /**
+     * @var int|null
+     */
+    private $programPrice;
+
+    /**
      * @var int
      */
     private $page;

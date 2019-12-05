@@ -16,6 +16,11 @@ use Doctrine\ORM\Mapping\ManyToOne;
  */
 class ProgramEvent
 {
+    public function __toString()
+    {
+        return $this->program_location;
+    }
+
     /**
      * Many features have one product. This is the owning side.
      * @ManyToOne(targetEntity="City", inversedBy="program_events", cascade={"remove"})

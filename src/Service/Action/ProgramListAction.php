@@ -17,25 +17,32 @@ class ProgramListAction
     /**
      * @var ProgramRepository
      */
-    private $vehicleRepository;
+    private $programRepository;
 
     public function __construct(
         ContainerInterface $container,
-        ProgramRepository $vehicleRepository
+        ProgramRepository $programRepository
     ) {
         $this->container = $container;
-        $this->vehicleRepository = $vehicleRepository;
+        $this->programRepository = $programRepository;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function execute(Request $request): Response
     {
-        $buildFilterDtoService = new FilterService();
+        $filterPrograms = new FilterService();
 
-        $filtersData = $buildFilterDtoService->execute($request);
-        $programs = $this->vehicleRepository->filterPrograms($filtersData);
-        $content = $this->container->get('twig')->render('program/filter.html.twig', [
+        $filtersData = $filterPrograms->execute($request);
+        $programs = $this->programRepository->filterPrograms($filtersData);
+        $content = $this->container->get('twig')->render('home/filter.html.twig', [
             'programs' => $programs,
-            'page' => $request->get('page', 1),
+            'page'     => $request->get('page', 1),
         ]);
 
         $response = new Response();
