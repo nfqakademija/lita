@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Service\Action;
+
 use App\Repository\ProgramRepository;
 use App\Service\FilterService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -32,9 +32,9 @@ class ProgramListAction
         $buildFilterDtoService = new FilterService();
 
         $filtersData = $buildFilterDtoService->execute($request);
-        $vehicles = $this->vehicleRepository->filterPrograms($filtersData);
+        $programs = $this->vehicleRepository->filterPrograms($filtersData);
         $content = $this->container->get('twig')->render('program/filter.html.twig', [
-            'programs' => $vehicles,
+            'programs' => $programs,
             'page' => $request->get('page', 1),
         ]);
 
