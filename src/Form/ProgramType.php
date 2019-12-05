@@ -19,12 +19,15 @@ class ProgramType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'Front-End' => 'Front-End',
-                    'Back-End' => 'Back-End',
+                    ''           => '',
+                    'Front-End'  => 'Front-End',
+                    'Back-End'   => 'Back-End',
                     'Testavimas' => 'Testavimas',
                 ],
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'label'  =>   'Filter'
+            ])
         ;
     }
 

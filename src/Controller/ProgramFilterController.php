@@ -1,47 +1,26 @@
 <?php
 namespace App\Controller;
 
-use App\Dto\FiltersData;
-use App\Entity\Program;
-use App\Form\ProgramType;
+use App\Service\Action\ProgramListAction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class ProgramFilterController
+ * @package App\Controller
+ */
 class ProgramFilterController extends AbstractController
 {
     /**
      * @Route("program/filter", name="filter")
      * @param Request $request
-     * @param SessionInterface $session
+     * @param ProgramListAction $programListAction
      * @return Response
      */
-    public function filter(Request $request, SessionInterface $session)
+    public function filter(Request $request, ProgramListAction $programListAction): Response
     {
-        $filtersData = new FiltersData();
-
-        $filtersData->setProgramName($request->get('program_name'));
-        $filtersData->setPage($request->get('page') ? $request->get('page') : 1);
-        $filtersData->setPage($request->get('page') ? $request->get('page') : 1);
-
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->filterPrograms($filtersData);
-
-        $totalPrograms = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->countMatchingPrograms($filtersData);
-
-        $pagesCount = ceil($totalPrograms / $filtersData->getPageSize());
-        $session->set('current_filters', $request->query->all());
-
-        return $this->render('program/filter.html.twig', [
-            'programs' => $programs,
-            'pagesCount' => $pagesCount,
-            'currentPage' => $request->get('page') ? $request->get('page') : 1,
-            'currentFilters' => $request->query->all(),
-        ]);
+        return $programListAction->execute($request);
     }
 }
