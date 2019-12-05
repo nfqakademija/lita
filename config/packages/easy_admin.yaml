@@ -13,18 +13,18 @@ easy_admin:
             class: App\Entity\Program
             form:
                 fields:
-                    - { property: 'program_name', type: 'choice', type_options:
-                      { multiple: false, choices:
+                - { property: 'program_name', type: 'choice', type_options:
+                    { multiple: false, choices:
                         {
-                            'Front-End': 'Front-End',
-                            'Back-End': 'Back-End',
+                            'Front-End':  'Front-End',
+                            'Back-End':   'Back-End',
                             'Testavimas': 'Testavimas'
                         }
                       }
-                    }
-                    - program_url
-                    - program_price
-                    - events
-                    - academy
+                   }
+                - program_url
+                - program_price
+                - events
+                - academy
         ProgramEvent:
             class: App\Entity\ProgramEvent
