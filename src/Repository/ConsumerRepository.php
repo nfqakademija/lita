@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Consumer;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method Consumer|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,39 +12,21 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Consumer[]    findAll()
  * @method Consumer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ConsumerRepository extends ServiceEntityRepository
+
+class ConsumerRepository extends EntityRepository implements UserLoaderInterface
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Consumer::class);
-    }
+    // ...
 
-    // /**
-    //  * @return Consumer[] Returns an array of Consumer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function loadUserByUsername($usernameOrEmail)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQuery(
+            'SELECT u
+                FROM App\Entity\Consumer u
+                WHERE u.username = :query
+                OR u.email = :query'
+        )
+            ->setParameter('query', $usernameOrEmail)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Consumer
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

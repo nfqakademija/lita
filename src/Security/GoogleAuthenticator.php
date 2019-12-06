@@ -70,38 +70,40 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-//        var_dump($credentials);
-//        exit;
         /** @var GoogleUser $googleUser */
         $googleUser = $this->getGoogleClient()
             ->fetchUserFromToken($credentials);
 
-        $email = $googleUser->getEmail();
+
+        $consumer_email = $googleUser->getEmail();
 
         // 1) have they logged in with Google before? Easy!
         $existingUser = $this->em->getRepository(Consumer::class)
             ->findOneBy(['googleId' => $googleUser->getId()]);
 
-        if ($existingUser) {
-            $user = $existingUser;
-        } else {
-            // 2) do we have a matching user by email?
-            $user = $this->em->getRepository(Consumer::class)
-                ->findOneBy(['email' => $email]);
+        if (null !== $existingUser) {
+            return $existingUser;
+        }
 
-            if (!$user) {
-                $user = new Consumer();
-                $user->setGoogleId($googleUser);
-                $user->setConsumerEmail($email);
-                $user->setConsumerName("your chosen username");
-//                $user->setPlainPassword("your chosen password");
-            }
+        /** @var Consumer $existingUser */
+        $existingUser = $this->em->getRepository(Consumer::class)
+            ->findOneBy(['consumer_email' => $consumer_email]);
+
+        if (null !== $existingUser) {
+            $existingUser->setConsumerEmail($googleUser->getEmail());
+            $this->em->persist($existingUser);
+            $this->em->flush();
+
+
+            return $existingUser;
         }
 
         // 3) Maybe you just want to "register" them by creating
         // a User object
-
+        $user = new Consumer();
         $user->setGoogleId($googleUser->getId());
+        $user->setConsumerEmail($consumer_email);
+        $user->setConsumerName($googleUser->getName());
         $this->em->persist($user);
         $this->em->flush();
 

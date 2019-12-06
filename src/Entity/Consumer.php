@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\OneToMany;
 use App\Entity\Review;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConsumerRepository")
  */
-class Consumer
+class Consumer implements UserInterface
 {
     /**
      * One Consumer can leave Review. This is the inverse side.
@@ -23,59 +24,44 @@ class Consumer
     {
         $this->reviews = new ArrayCollection();
     }
-
-    public function __toString()
-    {
-        return $this->consumer_name;
-    }
-
+//    public function __toString()
+//    {
+//        return $this->consumer_name;
+//    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $consumer_name;
-
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $consumer_lastname;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $consumer_email;
-
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $consumer_password;
 
+    private $yes;
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $googleId;
-
-    /**
-     * @return mixed
-     */
-    public function getGoogleId()
-    {
-        return $this->googleId;
-    }
-
-    /**
-     * @param mixed $googleId
-     */
-    public function setGoogleId($googleId): void
-    {
-        $this->googleId = $googleId;
-    }
 
     public function getId(): ?int
     {
@@ -90,7 +76,6 @@ class Consumer
     public function setConsumerName(string $consumer_name): self
     {
         $this->consumer_name = $consumer_name;
-
         return $this;
     }
 
@@ -102,7 +87,6 @@ class Consumer
     public function setConsumerLastname(string $consumer_lastname): self
     {
         $this->consumer_lastname = $consumer_lastname;
-
         return $this;
     }
 
@@ -114,19 +98,6 @@ class Consumer
     public function setConsumerEmail(string $consumer_email): self
     {
         $this->consumer_email = $consumer_email;
-
-        return $this;
-    }
-
-    public function getConsumerPassword(): ?string
-    {
-        return $this->consumer_password;
-    }
-
-    public function setConsumerPassword(string $consumer_password): self
-    {
-        $this->consumer_password = $consumer_password;
-
         return $this;
     }
 
@@ -144,5 +115,94 @@ class Consumer
     public function setReviews(ArrayCollection $reviews): void
     {
         $this->reviews = $reviews;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId): void
+    {
+        $this->googleId = $googleId;
+    }
+
+    public function getYes(): ?string
+    {
+        return $this->yes;
+    }
+
+    public function setYes(string $yes): self
+    {
+        $this->yes = $yes;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string)$this->yes;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string)$this->consumer_password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->consumer_password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
