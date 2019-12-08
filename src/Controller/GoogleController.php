@@ -1,5 +1,5 @@
 <?php
-Namespace App\Controller;
+namespace App\Controller;
 
     use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
     use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
