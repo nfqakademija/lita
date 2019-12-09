@@ -24,10 +24,10 @@ class Consumer implements UserInterface
     {
         $this->reviews = new ArrayCollection();
     }
-//    public function __toString()
-//    {
-//        return $this->consumer_name;
-//    }
+    public function __toString()
+    {
+        return $this->consumer_name;
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
