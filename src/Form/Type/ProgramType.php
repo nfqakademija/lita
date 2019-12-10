@@ -20,15 +20,13 @@ class ProgramType extends AbstractType
         $builder
             ->add('Programa', EntityType::class, [
                 'class' => Program::class,
-                'choice_label' => function (Program $program)
-                {
+                'choice_label' => function (Program $program) {
                     return sprintf($program->getProgramName());
                 }
             ])
             ->add('Miestas', EntityType::class, [
                 'class' => City::class,
-                'choice_label' => function (City $city)
-                {
+                'choice_label' => function (City $city) {
                     return sprintf($city->getCity());
                 }
             ])
