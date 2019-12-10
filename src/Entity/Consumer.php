@@ -51,7 +51,7 @@ class Consumer implements UserInterface
      */
     private $consumer_password;
 
-    private $yes;
+    private $isLiked;
 
     /**
      * @ORM\Column(type="json")
@@ -133,14 +133,14 @@ class Consumer implements UserInterface
         $this->googleId = $googleId;
     }
 
-    public function getYes(): ?string
+    public function getIsLiked(): ?string
     {
-        return $this->yes;
+        return $this->isLiked;
     }
 
-    public function setYes(string $yes): self
+    public function setIsLiked(string $isLiked): self
     {
-        $this->yes = $yes;
+        $this->isLiked = $isLiked;
 
         return $this;
     }
@@ -152,7 +152,7 @@ class Consumer implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->yes;
+        return (string)$this->isLiked;
     }
 
     /**
