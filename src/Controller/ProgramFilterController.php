@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Repository\ProgramRepository;
 use App\Service\Action\ProgramListAction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProgramFilterController extends AbstractController
 {
+    /** @var ProgramRepository */
+    private $programRepository;
+
+    public function __construct(ProgramRepository $programRepository)
+    {
+        $this->programRepository = $programRepository;
+    }
+
     /**
      * @Route("/filter", name="filter")
      * @param Request $request
@@ -24,6 +33,14 @@ class ProgramFilterController extends AbstractController
      */
     public function filter(Request $request, ProgramListAction $programListAction): Response
     {
+//        $filterPrograms = new FilterService();
+//
+//        $filtersData = $filterPrograms->execute($request);
+//        $programs = $this->programRepository->filterPrograms($filtersData);
+//        $content = $this->container->get('twig')->render('home/filter.html.twig', [
+//            'programs' => $programs,
+//            'page'     => $request->get('page', 1),
+//        ]);
         return $programListAction->execute($request);
     }
 }

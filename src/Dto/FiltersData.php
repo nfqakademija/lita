@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Dto;
 
 class FiltersData
@@ -9,7 +10,7 @@ class FiltersData
     private $programName;
 
     /**
-     * @var int|null
+     * @var string|null
      */
     private $programPrice;
 
@@ -37,6 +38,22 @@ class FiltersData
     public function setProgramName(?string $programName): void
     {
         $this->programName = $programName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProgramPrice(): ?string
+    {
+        return $this->programPrice;
+    }
+
+    /**
+     * @param string|null $programPrice
+     */
+    public function setProgramPrice(?string $programPrice): void
+    {
+        $this->programPrice = $programPrice;
     }
 
     /**

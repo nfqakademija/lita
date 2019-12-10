@@ -14,6 +14,7 @@ class FilterService
     {
         $filterData = new FiltersData();
         $filterData->setProgramName($request->get('type'));
+        $filterData->setProgramPrice($request->get('price'));
         $filterData->setPage($request->get('page', 1));
         return $filterData;
     }
