@@ -15,18 +15,15 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 class ConsumerRepository extends EntityRepository implements UserLoaderInterface
 {
-    // ...
-
     public function loadUserByUsername($usernameOrEmail)
     {
-        return $this->createQuery(
-            'SELECT u
-                FROM App\Entity\Consumer u
-                WHERE u.username = :query
-                OR u.email = :query'
-        )
-            ->setParameter('query', $usernameOrEmail)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $query=$this->createQueryBuilder('u');
+        $query
+            ->select('u')
+            ->from('App\Entity\Consumer', 'u')
+            ->where('u.email=:query')
+            ->andWhere('e.email=:query')
+            ;
+        return $query;
     }
 }
