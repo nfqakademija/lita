@@ -1,9 +1,11 @@
 <header class="container bg-white">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="/">
-            <img src="{{asset('build/images/logo.svg')}}" width="160" height="90" class="d-inline-block align-top" alt="Lita logo">
+            <img src="{{ asset('build/images/logo.svg') }}" width="160" height="90" class="d-inline-block align-top"
+                 alt="Lita logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -17,9 +19,11 @@
             </ul>
         </div>
     </nav>
-
     <a href="{{ path('connect_google_start') }}">
         Google
     </a>
-    <p>Username: {{ app.user.consumerEmail ?? 'Anonymous user'   }}</p>
+    <p>Username: {{ app.user.consumerEmail ?? 'Anonymous user' }}</p>
+    <a href="/logout">
+        Logout
+    </a>
 </header>
