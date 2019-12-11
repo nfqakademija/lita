@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
+use App\Dto\FiltersData;
 use App\Entity\Academy;
+use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Academy|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +24,52 @@ class AcademyRepository extends ServiceEntityRepository
         parent::__construct($registry, Academy::class);
     }
 
-    // /**
-    //  * @return Academy[] Returns an array of Academy objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param FiltersData $filtersData
+     * @return Collection
+     */
+    public function filterPrograms(FiltersData $filtersData)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->createQuerywithFiltersApplied($filtersData);
 
-    /*
-    public function findOneBySomeField($value): ?Academy
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $query->getQuery()->getResult();
     }
-    */
+
+    /**
+     * @param FiltersData $filtersData
+     * @return QueryBuilder
+     */
+    protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
+    {
+        $query = $this->getEntityManager()->createQueryBuilder('a');
+        $query
+            ->select('a')
+            ->from('App:Academy', 'a')
+            ->leftJoin(
+                'a.programs', 'p'
+            )
+            ->andWhere('p.program_name      = :program_name')
+            ->andWhere('p.program_price     = :program_price')
+            ->setParameters([
+                'p.program_name', $filtersData->getProgramName(),
+                'p.program_price', $filtersData->getProgramPrice()
+            ]);
+
+        return $query;
+    }
+
+    /**
+     * @param FiltersData $filtersData
+     * @return int
+     */
+    public function countMatchingPrograms(FiltersData $filtersData): int
+    {
+        try {
+            $query = $this->createQueryWithFiltersApplied($filtersData);
+
+            return (int)count($query->getQuery()->getResult());
+        } catch (\Throwable $e) {
+            return 0;
+        }
+    }
 }

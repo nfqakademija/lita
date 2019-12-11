@@ -1,7 +1,7 @@
 <?php
 namespace App\Service\Action;
 
-use App\Repository\ProgramRepository;
+use App\Repository\AcademyRepository;
 use App\Service\FilterService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +15,16 @@ class ProgramListAction
     private $container;
 
     /**
-     * @var ProgramRepository
+     * @var AcademyRepository
      */
-    private $programRepository;
+    private $academyRepository;
 
     public function __construct(
         ContainerInterface $container,
-        ProgramRepository $programRepository
+        AcademyRepository $academyRepository
     ) {
         $this->container = $container;
-        $this->programRepository = $programRepository;
+        $this->academyRepository = $academyRepository;
     }
 
     /**
@@ -39,7 +39,7 @@ class ProgramListAction
         $filterPrograms = new FilterService();
 
         $filtersData = $filterPrograms->execute($request);
-        $programs = $this->programRepository->filterPrograms($filtersData);
+        $programs = $this->academyRepository->filterPrograms($filtersData);
         $content = $this->container->get('twig')->render('home/filter.html.twig', [
             'programs' => $programs,
             'page'     => $request->get('page', 1),

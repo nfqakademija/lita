@@ -7,6 +7,11 @@ class FiltersData
     /**
      * @var string|null
      */
+    private $academyName;
+
+    /**
+     * @var string|null
+     */
     private $programName;
 
     /**
@@ -38,6 +43,22 @@ class FiltersData
     public function setProgramName(?string $programName): void
     {
         $this->programName = $programName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAcademyName(): ?string
+    {
+        return $this->academyName;
+    }
+
+    /**
+     * @param string|null $academyName
+     */
+    public function setAcademyName(?string $academyName): void
+    {
+        $this->academyName = $academyName;
     }
 
     /**
