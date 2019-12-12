@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ academy.academyName }}{% endblock %}
+
+{% block body %}
+    {{ academy.academyName }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        window.__academy = {
+            academyTitle: "{{ academy.academyName }}",
+            programs: [
+                {% for program in academy.programs %}
+                {
+                    programName: "{{ program.programName }}",
+                    reviews: [
+                        {% for review in program.reviews %}
+                        {
+                            author: "{{ review.consumer.username }}",
+                            review: "{{ review.reviewComment }}"
+                        }
+                        {% endfor %}
+                    ]
+                },
+                {% endfor %}
+            ]
+        }
+    </script>
+{% endblock %}
