@@ -1,27 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { getExtendedAcademyInfo } from "../../services/api";
 import Card from "../Card";
 import Filters from "./Filters";
-import Academy from "../Academy";
 
 class List extends PureComponent {
-    state = {
-      extendedAcademyInfo: false
-    };
-
-    getExtendedAcademyInfo = async (extendedAcademyId) => {
-        const extendedAcademyInfo = await getExtendedAcademyInfo(extendedAcademyId);
-        this.setState({ extendedAcademyInfo });
-    };
-
-    cleanAcademyInfo = () => {
-        this.setState({ extendedAcademyInfo: false });
-    };
-
     render() {
         const { academies } = this.props;
-        const { extendedAcademyInfo } = this.state;
 
         return (
             <Fragment>
@@ -33,7 +17,6 @@ class List extends PureComponent {
                         </div>
                     ))}
                 </div>
-                <Academy academyInfo={extendedAcademyInfo} cleanAcademyInfo={this.cleanAcademyInfo} />
             </Fragment>
         );
     }

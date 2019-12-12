@@ -1,14 +1,9 @@
 import React, { PureComponent } from 'react';
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import './card.scss';
 
 class Card extends PureComponent {
-    showAcademyModal = () => {
-        const { academy, showMoreInfo } = this.props;
-
-        showMoreInfo(academy.academy_id);
-    };
-
     getPrice = () => {
         const { academy } = this.props;
         let price = {};
@@ -60,7 +55,9 @@ class Card extends PureComponent {
                             <div className="mt-4 mb-5">
                                 <a href={academy.academy_url} className="card-link">{academy.academy_url}</a>
                             </div>
-                            <button type="button" className="btn btn-blue" onClick={this.showAcademyModal}>Skaityti daugiau</button>
+                            <Link to={`/${academy.academy_id}`}>
+                                <button type="button" className="btn btn-blue">Skaityti daugiau</button>
+                            </Link>
                         </div>
                 </div>
             </div>
@@ -77,8 +74,7 @@ Card.propTypes = {
         academy_email: PropTypes.string,
         academy_price: PropTypes.object,
         academy_url: PropTypes.string,
-    }),
-    showMoreInfo: PropTypes.func
+    })
 };
 
 export default Card;
