@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\ProgramEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -41,22 +40,9 @@ class City
      */
     private $city;
 
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
     }
 
     /**
@@ -73,5 +59,16 @@ class City
     public function setEvents(ArrayCollection $events): void
     {
         $this->events = $events;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+        return $this;
     }
 }

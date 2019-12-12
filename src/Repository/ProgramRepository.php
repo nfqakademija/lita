@@ -19,6 +19,17 @@ class ProgramRepository extends ServiceEntityRepository
         parent::__construct($registry, Program::class);
     }
 
+    public function findMinPriceByAcademy(int $academyId)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('MIN(p.program_price) as min_price, MAX(p.program_price) as max_price')
+            ->where('p.academy = :academy_id')
+            ->setParameter('academy_id', $academyId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+    }
+
     // /**
     //  * @return Program[] Returns an array of Program objects
     //  */
