@@ -16,7 +16,7 @@ class ConsumerFixtures extends Fixture
             $consumer->setConsumerName('Petras');
             $consumer->setConsumerLastname('Petrauskas');
             $consumer->setConsumerEmail('email@email.com');
-            $consumer->setConsumerPassword('testas');
+            $consumer->setPassword('testas');
             $manager->persist($consumer);
             $manager->flush();
         }

@@ -24,20 +24,25 @@ class Consumer implements UserInterface
     {
         $this->reviews = new ArrayCollection();
     }
+
     public function __toString()
     {
         return $this->consumer_name;
     }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
+
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $consumer_name;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -50,8 +55,6 @@ class Consumer implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $consumer_password;
-
-    private $isLiked;
 
     /**
      * @ORM\Column(type="json")
@@ -133,18 +136,6 @@ class Consumer implements UserInterface
         $this->googleId = $googleId;
     }
 
-    public function getIsLiked(): ?string
-    {
-        return $this->isLiked;
-    }
-
-    public function setIsLiked(string $isLiked): self
-    {
-        $this->isLiked = $isLiked;
-
-        return $this;
-    }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -152,7 +143,7 @@ class Consumer implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->isLiked;
+        return (string)$this->consumer_name;
     }
 
     /**

@@ -104,6 +104,7 @@ class GoogleAuthenticator extends SocialAuthenticator
         $user->setGoogleId($googleUser->getId());
         $user->setConsumerEmail($consumer_email);
         $user->setConsumerName($googleUser->getName());
+        $user->setRoles(['ROLE_USER']);
         $this->em->persist($user);
         $this->em->flush();
 
