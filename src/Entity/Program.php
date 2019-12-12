@@ -142,7 +142,7 @@ class Program
     }
 
     /**
-     * @return mixed
+     * @return Review[]
      */
     public function getReviews()
     {

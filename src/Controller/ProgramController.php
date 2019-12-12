@@ -63,6 +63,7 @@ class ProgramController extends AbstractController
      */
     public function getProgram(int $id)
     {
+        /** @var Program $program */
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->find($id);
