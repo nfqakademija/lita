@@ -14,16 +14,6 @@ use Doctrine\ORM\Mapping\OneToMany;
  */
 class Review
 {
-    /**
-     * One Review has many Events. This is the inverse side.
-     * @OneToMany(targetEntity="ProgramEvent", mappedBy="reviews", cascade={"remove"})
-     */
-    private $reviews;
-
-    public function __construct()
-    {
-        $this->reviews = new ArrayCollection();
-    }
 
     public function __toString()
     {
@@ -36,12 +26,6 @@ class Review
      * @JoinColumn(name="consumer_id", referencedColumnName="id")
      */
     private $consumer;
-
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
 
     /**
      * @ORM\Id()
@@ -64,6 +48,14 @@ class Review
      * @ORM\Column(type="date")
      */
     private $review_data;
+
+    /**
+     * @var Program
+     * Many Reviews have one Consumer. This is the owning side.
+     * @ManyToOne(targetEntity="Program", inversedBy="reviews")
+     * @JoinColumn(name="program_id", referencedColumnName="id")
+     */
+    private $program;
 
     public function getId(): ?int
     {
@@ -107,22 +99,6 @@ class Review
     }
 
     /**
-     * @return Collection
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
-
-    /**
-     * @param ArrayCollection $reviews
-     */
-    public function setReviews(ArrayCollection $reviews): void
-    {
-        $this->reviews = $reviews;
-    }
-
-    /**
      * @return mixed
      */
     public function getConsumer()
@@ -136,5 +112,21 @@ class Review
     public function setConsumer($consumer): void
     {
         $this->consumer = $consumer;
+    }
+
+    /**
+     * @return Program
+     */
+    public function getProgram(): Program
+    {
+        return $this->program;
+    }
+
+    /**
+     * @param Program $program
+     */
+    public function setProgram(Program $program): void
+    {
+        $this->program = $program;
     }
 }

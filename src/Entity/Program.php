@@ -23,9 +23,16 @@ class Program
      */
     private $events;
 
+    /**
+     * One Review has many Events. This is the inverse side.
+     * @OneToMany(targetEntity="Review", mappedBy="program", cascade={"remove"})
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function __toString()
@@ -132,5 +139,21 @@ class Program
     public function setAcademy($academy): void
     {
         $this->academy = $academy;
+    }
+
+    /**
+     * @return Review[]
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * @param mixed $reviews
+     */
+    public function setReviews($reviews): void
+    {
+        $this->reviews = $reviews;
     }
 }

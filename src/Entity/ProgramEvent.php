@@ -24,13 +24,6 @@ class ProgramEvent
 
     /**
      * Many features have one product. This is the owning side.
-     * @ManyToOne(targetEntity="Review", inversedBy="program_events")
-     * @JoinColumn(name="review_id", referencedColumnName="id")
-     */
-    private $reviews;
-
-    /**
-     * Many features have one product. This is the owning side.
      * @ManyToOne(targetEntity="Program", inversedBy="program_events")
      * @JoinColumn(name="program_id", referencedColumnName="id")
      */
@@ -129,22 +122,6 @@ class ProgramEvent
     public function getProgramAddress(): ?string
     {
         return $this->program_address;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReviews()
-    {
-        return $this->reviews;
-    }
-
-    /**
-     * @param mixed $reviews
-     */
-    public function setReviews($reviews): void
-    {
-        $this->reviews = $reviews;
     }
 
     /**
