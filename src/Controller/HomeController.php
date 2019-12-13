@@ -13,11 +13,9 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $form = $this->createForm(ProgramType::class);
         return $this->render('home/index.html.twig', [
             'title' => 'NFQ Lita',
             'activeNavItem' => 'home',
-            'form' => $form->createView()
         ]);
     }
 }

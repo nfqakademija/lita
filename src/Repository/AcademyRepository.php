@@ -58,14 +58,14 @@ class AcademyRepository extends ServiceEntityRepository
         }
 
         if ($filtersData->getProgramPrice() !== null) {
-            if ($filtersData->getProgramPrice() == 'FREE') {
+            if ($filtersData->getProgramPrice() == 'Nemokama') {
                 $query->andWhere('(programs.program_price = :program_price OR programs.program_price IS null)');
                 $query->setParameter('program_price', 0.0);
             }
-            if ($filtersData->getProgramPrice() == 'Cheaper-First') {
+            if ($filtersData->getProgramPrice() == 'Pigiausios viršuje') {
                 $query->orderBy('programs.program_price', 'ASC');
             }
-            if ($filtersData->getProgramPrice() == 'Expensive-First') {
+            if ($filtersData->getProgramPrice() == 'Brangiausios viršuje') {
                 $query->orderBy('programs.program_price', 'DESC');
             }
         }
