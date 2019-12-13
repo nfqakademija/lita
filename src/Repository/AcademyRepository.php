@@ -45,15 +45,9 @@ class AcademyRepository extends ServiceEntityRepository
         $query
             ->select('academy')
             ->from('App:Academy', 'academy')
-            ->leftJoin(
-                'academy.programs', 'programs'
-            )
-            ->leftJoin(
-                'programs.events', 'events'
-            )
-            ->leftJoin(
-                'events.cities', 'cities'
-            );
+            ->leftJoin('academy.programs', 'programs')
+            ->leftJoin('programs.events', 'events')
+            ->leftJoin('events.cities', 'cities');
 
         if ($filtersData->getProgramName() !== null) {
             $query->andWhere('programs.program_name = :program_name');
