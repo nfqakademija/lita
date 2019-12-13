@@ -41,7 +41,7 @@ class AcademyRepository extends ServiceEntityRepository
      */
     protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
     {
-        $query = $this->getEntityManager()->createQueryBuilder('academy');
+        $query = $this->getEntityManager()->createQueryBuilder();
         $query
             ->select('academy')
             ->from('App:Academy', 'academy')
@@ -71,10 +71,10 @@ class AcademyRepository extends ServiceEntityRepository
                 $query->setParameter('program_price', 0.0);
             }
             if ($filtersData->getProgramPrice() == 'Cheaper-First') {
-                $query->orderBy('programs.program_price ASC');
+                $query->orderBy('programs.program_price', 'ASC');
             }
             if ($filtersData->getProgramPrice() == 'Expensive-First') {
-                $query->orderBy('programs.program_price DESC');
+                $query->orderBy('programs.program_price', 'DESC');
             }
         }
 
