@@ -51,7 +51,7 @@
         "symfony/polyfill-php56": "*"
     },
     "scripts": {
-        "phpstan": "phpstan analyse -c phpstan.neon src tests --level 7 --no-progress",
+        "phpstan": "phpstan analyse -c phpstan.neon src test --level 7 --no-progress",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"

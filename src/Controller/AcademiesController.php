@@ -26,17 +26,9 @@ class AcademiesController extends AbstractController
      */
     public function index()
     {
-        $academies = $this->getDoctrine()
-            ->getRepository(Academy::class)
-            ->findAll();
-
-        if ($academies === null) {
-            return new JsonResponse("We could not find any academies", Response::HTTP_NOT_FOUND);
-        }
-
         $academiesArray = array();
 
-        foreach ($academies as $academy) {
+        foreach ($this->getAcademyEntityInfo() as $academy) {
             $minProgramPriceByAcademy = $this
                 ->getDoctrine()
                 ->getRepository(Program::class)
@@ -49,7 +41,7 @@ class AcademiesController extends AbstractController
                 'academy_url'         => $academy->getAcademyUrl(),
                 'academy_logo'        => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
-                'academy_price'   => $minProgramPriceByAcademy[0],
+                'academy_price'       => $minProgramPriceByAcademy[0],
             );
         }
 
@@ -57,6 +49,18 @@ class AcademiesController extends AbstractController
             $academiesArray,
             JsonResponse::HTTP_OK
         );
+    }
+
+    public function getAcademyEntityInfo()
+    {
+        $academies = $this->getDoctrine()
+            ->getRepository(Academy::class)
+            ->findAll();
+
+        if ($academies === null) {
+            return new JsonResponse("We could not find any academies", Response::HTTP_NOT_FOUND);
+        }
+        return $academies;
     }
 
     /**
