@@ -1,7 +1,8 @@
 <?php
-
 namespace App\Controller;
 
+use App\Entity\Academy;
+use App\Entity\City;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,32 @@ use App\Entity\Program;
 
 class ProgramController extends AbstractController
 {
+    /**
+     * @return Academy[]|Program[]|object[]|JsonResponse
+     */
+    public function getProgramEntityInfo()
+    {
+        $programs = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findAll();
+        if ($programs === null) {
+            return new JsonResponse("We could not find any programs", Response::HTTP_NOT_FOUND);
+        }
+        return array_unique($programs);
+    }
+    /**
+     * @return Academy[]|City[]|object[]|JsonResponse
+     */
+    public function getCityEntityInfo()
+    {
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->findAll();
+        if ($cities === null) {
+            return new JsonResponse("We could not find any programs", Response::HTTP_NOT_FOUND);
+        }
+        return array_unique($cities);
+    }
     /**
      * Returns list of programs.
      *
@@ -23,17 +50,8 @@ class ProgramController extends AbstractController
      */
     public function getPrograms()
     {
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findAll();
-
-        if ($programs === null) {
-            return new JsonResponse("We could not find any programs", Response::HTTP_NOT_FOUND);
-        }
-
         $programsArray = array();
-
-        foreach ($programs as $program) {
+        foreach ($this->getProgramEntityInfo() as $program) {
             $programsArray[] = array(
                 'program_id' => $program->getId(),
                 'program_name' => $program->getProgramName(),
@@ -41,58 +59,55 @@ class ProgramController extends AbstractController
                 'program_price' => $program->getProgramPrice(),
             );
         }
-
         return new JsonResponse(
             $programsArray,
             JsonResponse::HTTP_OK
         );
     }
-
     /**
-     * Returns program selected by the id.
+     * Returns names of all programs.
      *
-     * @param $id
      * @return JsonResponse
      *
      * @Route(
-     *     "/api/v1/program/{id}",
-     *     name="program",
-     *     methods={"GET"},
-     *     requirements={"id"="\d+"}
+     *     "/api/v1/programOptions",
+     *     name="program_names",
+     *     methods={"GET"}
      * )
      */
-    public function getProgram(int $id)
+    public function getProgramName()
     {
-        /** @var Program $program */
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->find($id);
-
-        if ($program === null) {
-            return new JsonResponse("There is no programs with id of: " . $id, Response::HTTP_NOT_FOUND);
+        $programNamesArray = array();
+        foreach ($this->getProgramEntityInfo() as $name) {
+            $programNamesArray[] = $name->getProgramName();
         }
-
-        $reviewsArray = array();
-        foreach ($program->getReviews() as $review) {
-            $reviewsArray[] = $review->getReviewStars();
-        }
-
-        $startDatesArray = array();
-        $endDatesArray = array();
-        foreach ($program->getEvents() as $review) {
-            $startDatesArray[] = $review->getProgramStart();
-            $endDatesArray[] = $review->getProgramEnd();
-        }
-
         return new JsonResponse(
-            array(
-                'program_id' => $program->getId(),
-                'program_name' => $program->getProgramName(),
-                'program_url' => $program->getProgramUrl(),
-                'program_price' => $program->getProgramPrice(),
-                'program_reviews' => $reviewsArray,
-                'program_start' => $startDatesArray,
-                'program_end' => $endDatesArray,
+            array (
+                'program_names' => $programNamesArray,
+            ),
+            JsonResponse::HTTP_OK
+        );
+    }
+    /**
+     * Returns all cities.
+     *
+     * @return JsonResponse
+     *
+     * @Route(
+     *     "/api/v1/cityOptions",
+     *     name="cities",
+     *     methods={"GET"}
+     * )
+     */
+    public function getCities()
+    {
+        $citiesArray = array();
+        foreach ($this->getCityEntityInfo() as $city) {
+            $citiesArray[] = $city->getCity();
+        }
+        return new JsonResponse(
+            array (
+                'cities' => $citiesArray
             ),
             JsonResponse::HTTP_OK
         );
