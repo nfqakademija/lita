@@ -28,7 +28,7 @@ class AcademyRepository extends ServiceEntityRepository
      * @param FiltersData $filtersData
      * @return Collection
      */
-    public function filterPrograms(FiltersData $filtersData)
+    public function filterAcademies(FiltersData $filtersData)
     {
         $query = $this->createQuerywithFiltersApplied($filtersData);
 
@@ -41,35 +41,43 @@ class AcademyRepository extends ServiceEntityRepository
      */
     protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
     {
-        $query = $this->getEntityManager()->createQueryBuilder('a');
+        $query = $this->getEntityManager()->createQueryBuilder('academy');
         $query
-            ->select('a')
-            ->from('App:Academy', 'a')
+            ->select('academy')
+            ->from('App:Academy', 'academy')
             ->leftJoin(
-                'a.programs', 'p'
+                'academy.programs', 'programs'
             )
-            ->andWhere('p.program_name      = :program_name')
-            ->andWhere('p.program_price     = :program_price')
-            ->setParameters([
-                'p.program_name', $filtersData->getProgramName(),
-                'p.program_price', $filtersData->getProgramPrice()
-            ]);
+            ->leftJoin(
+                'programs.events', 'events'
+            )
+            ->leftJoin(
+                'events.cities', 'cities'
+            );
+
+        if ($filtersData->getProgramName() !== null) {
+            $query->andWhere('programs.program_name = :program_name');
+            $query->setParameter('program_name', $filtersData->getProgramName());
+        }
+
+        if ($filtersData->getCity() !== null) {
+            $query->andWhere('cities.city = :city');
+            $query->setParameter('city', $filtersData->getCity());
+        }
+
+        if ($filtersData->getProgramPrice() !== null) {
+            if ($filtersData->getProgramPrice() == 'FREE') {
+                $query->andWhere('(programs.program_price = :program_price OR programs.program_price IS null)');
+                $query->setParameter('program_price', 0.0);
+            }
+            if ($filtersData->getProgramPrice() == 'Cheaper-First') {
+                $query->orderBy('programs.program_price ASC');
+            }
+            if ($filtersData->getProgramPrice() == 'Expensive-First') {
+                $query->orderBy('programs.program_price DESC');
+            }
+        }
 
         return $query;
-    }
-
-    /**
-     * @param FiltersData $filtersData
-     * @return int
-     */
-    public function countMatchingPrograms(FiltersData $filtersData): int
-    {
-        try {
-            $query = $this->createQueryWithFiltersApplied($filtersData);
-
-            return (int)count($query->getQuery()->getResult());
-        } catch (\Throwable $e) {
-            return 0;
-        }
     }
 }

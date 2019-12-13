@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller;
 
-use App\Repository\ProgramRepository;
-use App\Service\Action\ProgramListAction;
+use App\Dto\FiltersData;
+use App\Entity\Academy;
+use App\Repository\AcademyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,33 +16,46 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProgramFilterController extends AbstractController
 {
-    /** @var ProgramRepository */
-    private $programRepository;
+    /** @var AcademyRepository */
+    private $academyRepository;
 
-    public function __construct(ProgramRepository $programRepository)
+    public function __construct(AcademyRepository $academyRepository)
     {
-        $this->programRepository = $programRepository;
+        $this->academyRepository = $academyRepository;
     }
 
     /**
-     * @Route("/filter", name="filter")
+     * @Route("/api/v1/filter", name="filter")
      * @param Request $request
-     * @param ProgramListAction $programListAction
-     * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @return JsonResponse
      */
-    public function filter(Request $request, ProgramListAction $programListAction): Response
+    public function filter(Request $request): JsonResponse
     {
-//        $filterPrograms = new FilterService();
-//
-//        $filtersData = $filterPrograms->execute($request);
-//        $programs = $this->programRepository->filterPrograms($filtersData);
-//        $content = $this->container->get('twig')->render('home/filter.html.twig', [
-//            'programs' => $programs,
-//            'page'     => $request->get('page', 1),
-//        ]);
-        return $programListAction->execute($request);
+        $program = $request->get('Program');
+        $city = $request->get('City');
+        $price = $request->get('Price');
+
+        $filtersData = new FiltersData();
+
+        $filtersData->setProgramName($program);
+        $filtersData->setCity($city);
+        $filtersData->setProgramPrice($price);
+
+        /** @var Academy[] $academies */
+        $academies = $this->academyRepository->filterAcademies($filtersData);
+
+        $academiesArray = array();
+
+        foreach ($academies as $academy) {
+            $academiesArray[] = array(
+                'academy_id' => $academy->getId(),
+                'academy_name' => $academy->getAcademyName(),
+                'academy_email' => $academy->getAcademyEmail(),
+                'academy_url' => $academy->getAcademyUrl(),
+                'academy_logo' => $academy->getAcademyLogo(),
+            );
+        }
+
+        return new JsonResponse($academiesArray);
     }
 }

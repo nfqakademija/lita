@@ -20,6 +20,11 @@ class FiltersData
     private $programPrice;
 
     /**
+     * @var string|null
+     */
+    private $city;
+
+    /**
      * @var int
      */
     private $page;
@@ -43,6 +48,22 @@ class FiltersData
     public function setProgramName(?string $programName): void
     {
         $this->programName = $programName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
     }
 
     /**
