@@ -22,7 +22,7 @@ class Program
      * @var mixed
      */
     private $events;
-    
+
     /**
      * One Review has many Events. This is the inverse side.
      * @OneToMany(targetEntity="Review", mappedBy="program", cascade={"remove"})

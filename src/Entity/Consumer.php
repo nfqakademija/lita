@@ -4,9 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\OneToMany;
-use App\Entity\Review;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -17,6 +15,7 @@ class Consumer implements UserInterface
     /**
      * One Consumer can leave Review. This is the inverse side.
      * @OneToMany(targetEntity="Review", mappedBy="consumer", cascade={"remove"})
+     * @var mixed
      */
     private $reviews;
 
@@ -34,6 +33,7 @@ class Consumer implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
@@ -45,26 +45,31 @@ class Consumer implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
      */
     private $consumer_lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $consumer_email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
      */
     private $consumer_password;
 
     /**
      * @ORM\Column(type="json")
+     * @var mixed
      */
     private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
      */
     private $googleId;
 
@@ -107,17 +112,17 @@ class Consumer implements UserInterface
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
-    public function getReviews(): Collection
+    public function getReviews()
     {
         return $this->reviews;
     }
 
     /**
-     * @param ArrayCollection $reviews
+     * @param mixed $reviews
      */
-    public function setReviews(ArrayCollection $reviews): void
+    public function setReviews($reviews): void
     {
         $this->reviews = $reviews;
     }
@@ -139,6 +144,22 @@ class Consumer implements UserInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -146,25 +167,6 @@ class Consumer implements UserInterface
     public function getUsername(): string
     {
         return (string)$this->consumer_name;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -193,6 +195,7 @@ class Consumer implements UserInterface
     /**
      * @see UserInterface
      */
+
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
