@@ -50,6 +50,7 @@ class AcademiesController extends AbstractController
                 'academy_logo' => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
                 'academy_price' => $minProgramPriceByAcademy[0],
+                'academy_cities' => []
             );
         }
 

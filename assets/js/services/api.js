@@ -13,3 +13,32 @@ export function getExtendedAcademyInfo(id) {
             return response.data;
         })
 }
+
+export function getTypeOptions() {
+    return axios.get('/api/v1/programOptions')
+        .then( (response) => {
+            return response.data.program_names;
+        })
+}
+
+export function getCityOptions() {
+    return axios.get('/api/v1/cityOptions')
+        .then( (response) => {
+            return response.data.cities;
+        })
+}
+
+export function filterAcademies(City, Program, Price) {
+    return axios.get(
+        '/api/v1/filter',
+        {
+            params: {
+                City,
+                Program,
+                Price
+            }
+        })
+        .then( (response) => {
+            return response.data;
+        })
+}

@@ -30,6 +30,17 @@ class ProgramRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function findAcademyCities(int $academyId)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('DISTINCT ')
+            ->where('p.academy = :academy_id')
+            ->setParameter('academy_id', $academyId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+    }
+
     // /**
     //  * @return Program[] Returns an array of Program objects
     //  */

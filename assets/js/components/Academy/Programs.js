@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from "prop-types";
 import Program from "./Program";
 
@@ -7,7 +7,7 @@ class Programs extends Component {
         const { programs } = this.props;
         console.log(programs);
         return (
-            <div className="accordion" id="programs">
+            <Fragment id="programs">
                 {programs.map((program, index) => (
                     <Program
                         key={program.program_id}
@@ -16,7 +16,7 @@ class Programs extends Component {
                     />
                         )
                 )}
-            </div>
+            </Fragment>
         );
     }
 }
