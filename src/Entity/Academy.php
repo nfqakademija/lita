@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
 
@@ -15,6 +14,7 @@ class Academy
     /**
      * One Academy has many Programs. This is the inverse side.
      * @OneToMany(targetEntity="Program", mappedBy="academy", cascade={"remove"})
+     * @var mixed
      */
     private $programs;
 
@@ -32,31 +32,37 @@ class Academy
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $academy_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $academy_url;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $academy_logo;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $academy_email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $academy_description;
 
@@ -126,17 +132,17 @@ class Academy
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
-    public function getPrograms(): Collection
+    public function getPrograms()
     {
         return $this->programs;
     }
 
     /**
-     * @param ArrayCollection $programs
+     * @param mixed $programs
      */
-    public function setPrograms(ArrayCollection $programs): void
+    public function setPrograms($programs): void
     {
         $this->programs = $programs;
     }
