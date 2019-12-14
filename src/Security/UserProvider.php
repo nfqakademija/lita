@@ -4,6 +4,7 @@ namespace App\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Consumer;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -38,7 +39,7 @@ class UserProvider implements UserProviderInterface
      *
      * @param string $username The username
      * @return UserInterface
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function loadUserByUsername($username)
     {
