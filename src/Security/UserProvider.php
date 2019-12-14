@@ -3,7 +3,6 @@
 namespace App\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
 use App\Entity\Consumer;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -11,6 +10,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
 
     /**
@@ -29,32 +31,30 @@ class UserProvider implements UserProviderInterface
     }
 
     /**
-     * Loads the user for the given username.
+     * Loads the consumer for the given username.
      *
-     * This method must throw UsernameNotFoundException if the user is not
+     * This method must throw UsernameNotFoundException if the consumer is not
      * found.
      *
      * @param string $username The username
-     *
      * @return UserInterface
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function loadUserByUsername($username)
     {
-        return $this->entityManager->createQueryBuilder('u')
-            ->where('u.email = :email')
+        return $this->entityManager->createQueryBuilder()
+            ->where('email = :email')
             ->setParameter('email', $username)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
     /**
-     * Refreshes the user.
+     * Refreshes the consumer.
      *
-     * It is up to the implementation to decide if the user data should be
+     * It is up to the implementation to decide if the consumer data should be
      * totally reloaded (e.g. from the database), or if the UserInterface
-     * object can just be merged into some internal array of users / identity
+     * object can just be merged into some internal array of consumers / identity
      * map.
      *
      * @param UserInterface $consumer
@@ -63,7 +63,7 @@ class UserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $consumer)
     {
-        if (!$consumer instanceof User) {
+        if (!$consumer instanceof Consumer) {
             throw new UnsupportedUserException(
                 sprintf('Instances of "%s" are not supported.', get_class($consumer))
             );
@@ -72,7 +72,7 @@ class UserProvider implements UserProviderInterface
     }
 
     /**
-     * Whether this provider supports the given user class.
+     * Whether this provider supports the given consumer class.
      *
      * @param string $class
      *
@@ -80,6 +80,6 @@ class UserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'App\Security\User';
+        return $class === 'App\Security\Consumer';
     }
 }

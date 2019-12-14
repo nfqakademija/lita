@@ -47,10 +47,12 @@ class Consumer implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $consumer_lastname;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $consumer_email;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
