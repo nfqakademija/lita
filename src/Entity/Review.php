@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
@@ -24,6 +22,7 @@ class Review
      * Many Reviews have one Consumer. This is the owning side.
      * @ManyToOne(targetEntity="Consumer", inversedBy="reviews")
      * @JoinColumn(name="consumer_id", referencedColumnName="id")
+     * @var Consumer
      */
     private $consumer;
 
@@ -31,21 +30,25 @@ class Review
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $review_stars;
 
     /**
      * @ORM\Column(type="text")
+     * @var string
      */
     private $review_comment;
 
     /**
      * @ORM\Column(type="date")
+     * @var DateTimeInterface|null
      */
     private $review_data;
 
@@ -86,12 +89,12 @@ class Review
         return $this;
     }
 
-    public function getReviewData(): ?\DateTimeInterface
+    public function getReviewData(): ?DateTimeInterface
     {
         return $this->review_data;
     }
 
-    public function setReviewData(\DateTimeInterface $review_data): self
+    public function setReviewData(DateTimeInterface $review_data): self
     {
         $this->review_data = $review_data;
 
