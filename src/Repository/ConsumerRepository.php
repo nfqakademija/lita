@@ -15,6 +15,10 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 class ConsumerRepository extends EntityRepository implements UserLoaderInterface
 {
+    /**
+     * @param string $usernameOrEmail
+     * @return \Doctrine\ORM\QueryBuilder|\Symfony\Component\Security\Core\User\UserInterface|null
+     */
     public function loadUserByUsername($usernameOrEmail)
     {
         $query=$this->createQueryBuilder('u');
