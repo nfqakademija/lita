@@ -19,7 +19,7 @@ class ProgramController extends AbstractController
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findAll();
-        if ($programs === null) {
+        if ($programs == null) {
             return new JsonResponse("We could not find any programs", Response::HTTP_NOT_FOUND);
         }
         return array_unique($programs);
@@ -32,7 +32,7 @@ class ProgramController extends AbstractController
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
-        if ($cities === null) {
+        if ($cities == null) {
             return new JsonResponse("We could not find any programs", Response::HTTP_NOT_FOUND);
         }
         return array_unique($cities);
