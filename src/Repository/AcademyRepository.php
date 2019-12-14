@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Dto\FiltersData;
 use App\Entity\Academy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Academy|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +17,61 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class AcademyRepository extends ServiceEntityRepository
 {
+    /**
+     * AcademyRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Academy::class);
     }
 
-    // /**
-    //  * @return Academy[] Returns an array of Academy objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param FiltersData $filtersData
+     * @return Collection
+     */
+    public function filterAcademies(FiltersData $filtersData)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $query = $this->createQuerywithFiltersApplied($filtersData);
+        return $query->getQuery()->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Academy
+    /**
+     * @param FiltersData $filtersData
+     * @return QueryBuilder
+     */
+    protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query
+            ->select('academy')
+            ->from('App:Academy', 'academy')
+            ->leftJoin('academy.programs', 'programs')
+            ->leftJoin('programs.events', 'events')
+            ->leftJoin('events.cities', 'cities');
+
+        if ($filtersData->getProgramName() !== null) {
+            $query->andWhere('programs.program_name = :program_name');
+            $query->setParameter('program_name', $filtersData->getProgramName());
+        }
+
+        if ($filtersData->getCity() !== null) {
+            $query->andWhere('cities.city = :city');
+            $query->setParameter('city', $filtersData->getCity());
+        }
+
+        if ($filtersData->getProgramPrice() !== null) {
+            if ($filtersData->getProgramPrice() == 'Nemokama') {
+                $query->andWhere('(programs.program_price = :program_price OR programs.program_price IS null)');
+                $query->setParameter('program_price', 0.0);
+            }
+            if ($filtersData->getProgramPrice() == 'Pigiausios viršuje') {
+                $query->orderBy('programs.program_price', 'ASC');
+            }
+            if ($filtersData->getProgramPrice() == 'Brangiausios viršuje') {
+                $query->orderBy('programs.program_price', 'DESC');
+            }
+        }
+        return $query;
     }
-    */
 }
