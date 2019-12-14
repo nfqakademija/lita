@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -15,6 +14,7 @@ class City
     /**
      * One City has many Events. This is the inverse side.
      * @OneToMany(targetEntity="ProgramEvent", mappedBy="cities", cascade={"remove"})
+     * @var mixed
      */
     private $events;
 
@@ -32,11 +32,13 @@ class City
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $city;
 
@@ -46,17 +48,17 @@ class City
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
-    public function getEvents(): Collection
+    public function getEvents()
     {
         return $this->events;
     }
 
     /**
-     * @param ArrayCollection $events
+     * @param mixed $events
      */
-    public function setEvents(ArrayCollection $events): void
+    public function setEvents($events): void
     {
         $this->events = $events;
     }
