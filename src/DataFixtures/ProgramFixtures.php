@@ -15,7 +15,7 @@ class ProgramFixtures extends Fixture
 
             $program->setProgramName('PHP');
             $program->setProgramUrl('www.google.com/php');
-            $program->setProgramPrice('500');
+            $program->setProgramPrice(500);
             $manager->persist($program);
             $manager->flush();
         }
