@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -20,12 +19,14 @@ class Program
     /**
      * One Program has many Events. This is the inverse side.
      * @OneToMany(targetEntity="ProgramEvent", mappedBy="programs", cascade={"remove"})
+     * @var mixed
      */
     private $events;
-
+    
     /**
      * One Review has many Events. This is the inverse side.
      * @OneToMany(targetEntity="Review", mappedBy="program", cascade={"remove"})
+     * @var mixed
      */
     private $reviews;
 
@@ -44,6 +45,7 @@ class Program
      * Many Programs have one Academy. This is the owning side.
      * @ManyToOne(targetEntity="Academy", inversedBy="programs")
      * @JoinColumn(name="academy_id", referencedColumnName="id")
+     * @var string
      */
     private $academy;
 
@@ -51,21 +53,25 @@ class Program
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $program_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @var string
      */
     private $program_url;
 
     /**
      * @ORM\Column(type="integer", length=100, nullable=true)
+     *  @var int
      */
     private $program_price;
 
@@ -110,17 +116,17 @@ class Program
     }
 
     /**
-     * @return Collection
+     * @return mixed
      */
-    public function getEvents(): Collection
+    public function getEvents()
     {
         return $this->events;
     }
 
     /**
-     * @param ArrayCollection $events
+     * @param mixed $events
      */
-    public function setEvents(ArrayCollection $events): void
+    public function setEvents($events): void
     {
         $this->events = $events;
     }
