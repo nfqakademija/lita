@@ -18,7 +18,7 @@ export const setSelectedType = (selectedType) => ({
     selectedType,
 });
 
-export const setFreePrice = (freePrice) => ({
-    type: 'setFreePrice',
-    freePrice,
+export const setPrice = (selectedPrice) => ({
+    type: 'setPrice',
+    selectedPrice,
 });

@@ -61,7 +61,7 @@ class AcademyRepository extends ServiceEntityRepository
         }
 
         if ($filtersData->getProgramPrice() !== null) {
-            if ($filtersData->getProgramPrice() == 'Nemokama') {
+            if ($filtersData->getProgramPrice() == 'Nemokamos') {
                 $query->andWhere('(programs.program_price = :program_price OR programs.program_price IS null)');
                 $query->setParameter('program_price', 0.0);
             }

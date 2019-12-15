@@ -3,7 +3,7 @@ const initialStateOfFilters = {
     typeOptions: [],
     selectedCity: null,
     selectedType: null,
-    freePrice: false,
+    selectedPrice: 'Pigiausios viršuje',
 };
 
 const filters = (state = initialStateOfFilters, action) => {
@@ -24,9 +24,9 @@ const filters = (state = initialStateOfFilters, action) => {
             ...state,
             selectedType: action.selectedType,
         };
-        case 'setFreePrice': return {
+        case 'setPrice': return {
             ...state,
-            freePrice: action.freePrice,
+            selectedPrice: action.selectedPrice,
         };
         default: return state;
     }

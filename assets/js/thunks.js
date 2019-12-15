@@ -26,7 +26,7 @@ export const getCityOptions = () => (dispatch) => {
 
 export const filterAcademies = () => (dispatch, getState) => {
     const { filters } = getState();
-    return filter(filters.selectedCity, filters.selectedType, filters.freePrice ? 'Nemokama' : null)
+    return filter(filters.selectedCity, filters.selectedType, filters.selectedPrice)
         .then((academies) => {
             dispatch(setFilteredAcademies(academies.length === 0 ? 'Empty' : academies));
         });

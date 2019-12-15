@@ -55,7 +55,10 @@ class Card extends PureComponent {
                             <div className="mt-4 mb-5">
                                 <a href={academy.academy_url} className="card-link">{academy.academy_url}</a>
                             </div>
-                            <Link to={`/${academy.academy_id}`}>
+                            <Link to={{
+                                pathname: `/${academy.academy_id}`,
+                                search: location.search,
+                            }}>
                                 <button type="button" className="btn btn-blue">Skaityti daugiau</button>
                             </Link>
                         </div>

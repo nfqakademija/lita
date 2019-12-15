@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getAllAcademies } from "../thunks";
 import List from './List';
 import Filters from "./Filters/Filters";
 
 class Home extends Component {
-    componentDidMount() {
-        const { getAcademies, academies } = this.props;
-
-        if (academies.length === 0)  getAcademies();
-    }
-
     render() {
-        const { academies, filteredAcademies } = this.props;
+        const { filteredAcademies } = this.props;
 
         return (
             <div className="container">
@@ -28,7 +21,7 @@ class Home extends Component {
                     )
                     : (
                         <List
-                            academies={filteredAcademies.length !== 0 ? filteredAcademies : academies}
+                            academies={filteredAcademies}
                         />
                     )
 
@@ -39,24 +32,18 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-    academies: PropTypes.array,
     filteredAcademies: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.array
     ]),
-    getAcademies: PropTypes.func
+    filterAcademies: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-    academies: state.academies.academies,
     filteredAcademies: state.academies.filteredAcademies,
-});
-const mapDispatchToProps = (dispatch) => ({
-    getAcademies: () => dispatch(getAllAcademies()),
 });
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+    mapStateToProps
 )(Home);
 

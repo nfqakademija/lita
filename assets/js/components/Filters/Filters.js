@@ -1,42 +1,69 @@
-import React, {Fragment, PureComponent} from 'react';
+import React, {Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from 'react-bootstrap/Form'
 import './filters.scss';
 import PropTypes from "prop-types";
 import { filterAcademies, getTypeOptions, getCityOptions } from "../../thunks";
-import { setSelectedCity, setCityOptions, setFreePrice, setSelectedType } from "../../actions/filters";
+import { setSelectedCity, setCityOptions, setPrice, setSelectedType } from "../../actions/filters";
 import {connect} from "react-redux";
 
-class Filters extends PureComponent {
+class Filters extends Component {
     componentDidMount() {
         const { getTypeOptions, getCityOptions, cityOptions, typeOptions } = this.props;
 
         if (cityOptions.length === 0)  getCityOptions();
         if (typeOptions.length === 0)  getTypeOptions();
+        this.resolveLocation();
+        this.props.filterAcademies();
     }
 
+    resolveLocation = () => {
+        if (location.search !== '') {
+            const searchParams = new URLSearchParams(location.search);
+            this.props.setSelectedCity(searchParams.get('City'));
+            this.props.setSelectedType(searchParams.get('Program'));
+            this.props.setPrice(searchParams.get('Price'));
+        }
+    };
+
     selectCity = (key, event) => {
+        const searchParams = new URLSearchParams(location.search);
+
         if (event.currentTarget.innerText === 'Visi') {
+            searchParams.delete('City');
             this.props.setSelectedCity(null);
         } else {
+            searchParams.delete('City');
+            searchParams.append('City', event.currentTarget.innerText);
             this.props.setSelectedCity(event.currentTarget.innerText);
         }
+
+        this.props.history.push(`${location.pathname}?${searchParams.toString()}`);
     };
 
     selectType = (key, event) => {
+        const searchParams = new URLSearchParams(location.search);
+
         if (event.currentTarget.innerText === 'Visos') {
+            searchParams.delete('Program');
             this.props.setSelectedType(null);
         } else {
+            searchParams.delete('Program');
+            searchParams.append('Program', event.currentTarget.innerText);
             this.props.setSelectedType(event.currentTarget.innerText);
         }
+
+        this.props.history.push(`${location.pathname}?${searchParams.toString()}`);
     };
 
-    priceCheck = (event) => {
-        this.props.setFreePrice(event.currentTarget.checked);
-    };
+    setPriceSort = (event) => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.delete('Price');
+        searchParams.append('Price', event.currentTarget.labels[0].innerText);
+        this.props.history.push(`${location.pathname}?${searchParams.toString()}`);
 
-    setSort = (event) => {
-        //this.props.setFreePrice(event.currentTarget.labels[0].innerText);
+        this.props.setPrice(event.currentTarget.labels[0].innerText);
         this.props.filterAcademies();
     };
 
@@ -47,7 +74,7 @@ class Filters extends PureComponent {
                     <label className="col-lg-2 col-12 filter-label">Filtruoti pagal:</label>
                     <div className="col-lg-8 col-12 mb-3">
                         <div className="row">
-                            <div className="col-12 col-lg-4 mb-3 dropdown filter my-lg-auto">
+                            <div className="col-12 col-lg-6 mb-3 dropdown filter my-lg-auto">
                                 <Dropdown>
                                     <Dropdown.Toggle variant="primary" id="dropdown-basic" className="filter-toggle">
                                         { this.props.selectedCity === null ? "Miestas" : this.props.selectedCity }
@@ -61,7 +88,7 @@ class Filters extends PureComponent {
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </div>
-                            <div className="col-12 col-lg-4 mb-3 dropdown filter my-lg-auto">
+                            <div className="col-12 col-lg-6 mb-3 dropdown filter my-lg-auto">
                                 <Dropdown>
                                     <Dropdown.Toggle variant="primary" id="dropdown-basic" className="filter-toggle">
                                         { this.props.selectedType === null ? "Programa" : this.props.selectedType }
@@ -75,12 +102,6 @@ class Filters extends PureComponent {
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </div>
-                            <div className="col-12 col-lg-4 mb-3 dropdown filter my-lg-auto text-center">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="price" defaultChecked={this.props.freePrice} onClick={this.priceCheck}/>
-                                    <label className="form-check-label" htmlFor="price">Nemokamos</label>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div className="col-lg-2 col-12 mb-3">
@@ -88,26 +109,37 @@ class Filters extends PureComponent {
                     </div>
                 </div>
                 <div className="row">
-                    <Form>
+                    <Form className="col-12">
                         <div className="mb-3">
                             <Form.Check
                                 custom
-                                onChange={this.setSort}
+                                onChange={this.setPriceSort}
                                 inline
                                 label="Pigiausios viršuje"
                                 type="radio"
                                 name="sort"
-                                defaultChecked={this.props.freePrice}
+                                checked={this.props.price === 'Pigiausios viršuje'}
                                 id="cheap"
                             />
                             <Form.Check
                                 custom
-                                onChange={this.setSort}
+                                onChange={this.setPriceSort}
                                 inline
                                 label="Brangiausios viršuje"
                                 type="radio"
                                 name="sort"
+                                checked={this.props.price === 'Brangiausios viršuje'}
                                 id="expensive"
+                            />
+                            <Form.Check
+                                custom
+                                onChange={this.setPriceSort}
+                                inline
+                                label="Nemokamos"
+                                type="radio"
+                                name="sort"
+                                checked={this.props.price === 'Nemokamos'}
+                                id="free"
                             />
                         </div>
                     </Form>
@@ -124,13 +156,14 @@ Filters.propTypes = {
     typeOptions: PropTypes.array,
     selectedCity: PropTypes.any,
     selectedType: PropTypes.any,
-    freePrice: PropTypes.bool,
+    price: PropTypes.string,
     getCityOptions: PropTypes.func,
     getTypeOptions: PropTypes.func,
     filterAcademies: PropTypes.func,
     setSelectedCity: PropTypes.func,
     setSelectedType: PropTypes.func,
-    setFreePrice: PropTypes.func,
+    setPrice: PropTypes.func,
+    history: PropTypes.object,
 }
 
 const mapStateToProps = (state) => ({
@@ -138,7 +171,7 @@ const mapStateToProps = (state) => ({
     typeOptions: state.filters.typeOptions,
     selectedCity: state.filters.selectedCity,
     selectedType: state.filters.selectedType,
-    freePrice: state.filters.freePrice,
+    price: state.filters.selectedPrice,
 });
 const mapDispatchToProps = (dispatch) => ({
     filterAcademies: () => dispatch(filterAcademies()),
@@ -147,10 +180,10 @@ const mapDispatchToProps = (dispatch) => ({
     setCityOptions: () => dispatch(setCityOptions()),
     setSelectedCity: (city) => dispatch(setSelectedCity(city)),
     setSelectedType: (type) => dispatch(setSelectedType(type)),
-    setFreePrice: (value) => dispatch(setFreePrice(value)),
+    setPrice: (value) => dispatch(setPrice(value)),
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Filters);
+)(withRouter(Filters));
