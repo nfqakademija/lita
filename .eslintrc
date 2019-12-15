@@ -13,6 +13,8 @@
     "ecmaVersion": 2018
   },
   "globals": {
-    "document": "readonly"
+    "document": "readonly",
+    "window": "readonly",
+    "location": "readonly"
   }
 }

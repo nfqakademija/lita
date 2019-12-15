@@ -43,13 +43,14 @@ class AcademiesController extends AbstractController
                 ->findMinPriceByAcademy($academy->getId());
 
             $academiesArray[] = array(
-                'academy_id'          => $academy->getId(),
-                'academy_name'        => $academy->getAcademyName(),
-                'academy_email'       => $academy->getAcademyEmail(),
-                'academy_url'         => $academy->getAcademyUrl(),
-                'academy_logo'        => $academy->getAcademyLogo(),
+                'academy_id' => $academy->getId(),
+                'academy_name' => $academy->getAcademyName(),
+                'academy_email' => $academy->getAcademyEmail(),
+                'academy_url' => $academy->getAcademyUrl(),
+                'academy_logo' => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
-                'academy_price'   => $minProgramPriceByAcademy[0],
+                'academy_price' => $minProgramPriceByAcademy[0],
+                'academy_cities' => []
             );
         }
 
@@ -85,26 +86,34 @@ class AcademiesController extends AbstractController
         $programsArray = [];
 
         foreach ($academy->getPrograms() as $program) {
-                $programsArray[] = [
-                        'program_id'            => $program->getId(),
-                        'program_name'          => $program->getProgramName(),
-                        'program_price'         => $program->getProgramPrice(),
-                        'program_locations'     => $this->getProgramLocations($program->getEvents()),
-                        'program_address '      => $this->getProgramAddress($program->getEvents()),
-                        'program_reviews'       => $this->getProgramReviews($program->getEvents()),
-                        'program_dates'         => $this->getDates($program->getEvents()),
+            $reviews = [];
+            foreach ($program->getReviews() as $review) {
+                $reviews[] = [
+                    'comment' => $review->getReviewComment()
                 ];
+            }
+
+
+            $programsArray[] = [
+                'program_id' => $program->getId(),
+                'program_name' => $program->getProgramName(),
+                'program_price' => $program->getProgramPrice(),
+                'program_locations' => $this->getProgramLocations($program->getEvents()),
+                'program_address ' => $this->getProgramAddress($program->getEvents()),
+                'program_reviews' => $reviews,
+                'program_dates' => $this->getDates($program->getEvents()),
+            ];
         }
 
         return new JsonResponse(
-            array (
-                'academy_id'          => $academy->getId(),
-                'academy_name'        => $academy->getAcademyName(),
-                'academy_email'       => $academy->getAcademyEmail(),
-                'academy_url'         => $academy->getAcademyUrl(),
-                'academy_logo'        => $academy->getAcademyLogo(),
+            array(
+                'academy_id' => $academy->getId(),
+                'academy_name' => $academy->getAcademyName(),
+                'academy_email' => $academy->getAcademyEmail(),
+                'academy_url' => $academy->getAcademyUrl(),
+                'academy_logo' => $academy->getAcademyLogo(),
                 'academy_description' => $academy->getAcademyDescription(),
-                'academy_programs'    => $programsArray,
+                'academy_programs' => $programsArray,
             ),
             JsonResponse::HTTP_OK
         );
@@ -117,9 +126,9 @@ class AcademiesController extends AbstractController
 
         foreach ($programEvents as $event) {
             $datesArray[] = [
-                    'program_start_date' => $event->getProgramStart()->format('Y-m-d'),
-                    'program_end_date'   => $event->getProgramEnd()->format('Y-m-d'),
-                ];
+                'program_start_date' => $event->getProgramStart()->format('Y-m-d'),
+                'program_end_date' => $event->getProgramEnd()->format('Y-m-d'),
+            ];
         }
 
         return $datesArray;
@@ -147,17 +156,5 @@ class AcademiesController extends AbstractController
         }
 
         return $addressArray;
-    }
-
-    protected function getProgramReviews(Collection $programEvents): array
-    {
-        /** @var ProgramEvent $review */
-        $reviewsArray = [];
-
-        foreach ($programEvents as $review) {
-            $reviewsArray[] = $review->getReviews();
-        }
-
-        return $reviewsArray;
     }
 }

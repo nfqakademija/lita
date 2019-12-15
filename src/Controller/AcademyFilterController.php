@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Dto\FiltersData;
 use App\Entity\Academy;
+use App\Entity\Program;
 use App\Repository\AcademyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,12 +46,19 @@ class AcademyFilterController extends AbstractController
         $academiesArray = array();
 
         foreach ($academies as $academy) {
+            $minProgramPriceByAcademy = $this
+                ->getDoctrine()
+                ->getRepository(Program::class)
+                ->findMinPriceByAcademy($academy->getId());
+
             $academiesArray[] = array(
                 'academy_id' => $academy->getId(),
                 'academy_name' => $academy->getAcademyName(),
                 'academy_email' => $academy->getAcademyEmail(),
                 'academy_url' => $academy->getAcademyUrl(),
                 'academy_logo' => $academy->getAcademyLogo(),
+                'academy_description' => $academy->getAcademyDescription(),
+                'academy_price' => $minProgramPriceByAcademy[0],
             );
         }
         return new JsonResponse($academiesArray);
