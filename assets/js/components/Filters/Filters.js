@@ -81,9 +81,9 @@ class Filters extends Component {
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item onSelect={this.selectCity}>Visi</Dropdown.Item>
+                                        <Dropdown.Item onSelect={this.selectCity} className="filter-item">Visi</Dropdown.Item>
                                         {this.props.cityOptions.map(city => (
-                                            <Dropdown.Item key={city} onSelect={this.selectCity}>{ city }</Dropdown.Item>
+                                            <Dropdown.Item key={city} onSelect={this.selectCity} className="filter-item">{ city }</Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -95,9 +95,9 @@ class Filters extends Component {
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item onSelect={this.selectType}>Visos</Dropdown.Item>
+                                        <Dropdown.Item onSelect={this.selectType} className="filter-item">Visos</Dropdown.Item>
                                         {this.props.typeOptions.map(type => (
-                                            <Dropdown.Item key={type} onSelect={this.selectType}>{ type }</Dropdown.Item>
+                                            <Dropdown.Item key={type} onSelect={this.selectType} className="filter-item">{ type }</Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
                                 </Dropdown>

@@ -15,3 +15,9 @@
       color: $white;
     }
 }
+
+.filter-item {
+    &:hover {
+      background-color: $bg_dark_grey;
+    }
+}
