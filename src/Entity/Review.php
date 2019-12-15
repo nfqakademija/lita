@@ -118,9 +118,9 @@ class Review
     }
 
     /**
-     * @return Program
+     * @return mixed
      */
-    public function getProgram(): Program
+    public function getProgram()
     {
         return $this->program;
     }
