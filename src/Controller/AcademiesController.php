@@ -86,7 +86,6 @@ class AcademiesController extends AbstractController
         $programsArray = [];
 
         foreach ($academy->getPrograms() as $program) {
-
             $reviews = [];
             foreach ($program->getReviews() as $review) {
                 $reviews[] = [
