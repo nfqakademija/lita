@@ -195,7 +195,6 @@ class Consumer implements UserInterface
     /**
      * @see UserInterface
      */
-
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
