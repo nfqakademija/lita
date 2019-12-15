@@ -69,6 +69,11 @@ class Program
      */
     private $program_price;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $program_description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Program
     public function setProgramUrl(string $program_url): self
     {
         $this->program_url = $program_url;
+
+        return $this;
+    }
+
+    public function getProgramDescription(): ?string
+    {
+        return $this->program_description;
+    }
+
+    public function setProgramDescription(string $program_description): self
+    {
+        $this->program_description = $program_description;
 
         return $this;
     }

@@ -9,6 +9,23 @@ easy_admin:
             class: App\Entity\Consumer
         Review:
             class: App\Entity\Review
+            form:
+                fields:
+                    - { property: 'review_stars', type: 'choice', type_options:
+                        { multiple: false, choices:
+                          {
+                              '1':  '1',
+                              '2':  '2',
+                              '3':  '3',
+                              '4':  '4',
+                              '5':  '5'
+                          }
+                        }
+                      }
+                    - review_data
+                    - review_comment
+                    - program
+                    - consumer
         Program:
             class: App\Entity\Program
             form:
@@ -26,5 +43,6 @@ easy_admin:
                 - program_price
                 - events
                 - academy
+                - program_description
         ProgramEvent:
             class: App\Entity\ProgramEvent
