@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { getExtendedAcademyInfo } from "../services/api";
 import Programs from "./Academy/Programs";
 import PropTypes from "prop-types";
-import Academy from "./Academy";
+import Rating from "./Rating";
 
 class AcademyInfo extends Component {
     state = {
@@ -18,6 +18,14 @@ class AcademyInfo extends Component {
         const extendedAcademyInfo = await getExtendedAcademyInfo(academyId);
         this.setState({ extendedAcademyInfo, programFilter: searchParams.get('Program') });
     }
+
+    checkIfReviewsExist = () => {
+        const { extendedAcademyInfo: academyInfo } = this.state;
+        return academyInfo.academy_programs
+            && academyInfo.academy_programs.length > 0
+            && academyInfo.academy_programs[0].program_reviews.length > 0;
+    };
+
     render() {
         const { extendedAcademyInfo: academyInfo, programFilter } = this.state;
         return (
@@ -42,7 +50,6 @@ class AcademyInfo extends Component {
                     </div>
                     <div className="row align-items-center justify-content-between h-100">
                         <h1 className="my-4">{academyInfo.academy_name}</h1>
-                        <span className="text-warning">★ ★ ★ ★ ☆</span>
                     </div>
                     <div className="row align-items-center justify-content-between h-100">
 
@@ -74,8 +81,17 @@ class AcademyInfo extends Component {
                         </div>
 
                     </div>
+                    <h3 className="my-4">Akademijos reitingas</h3>
+                    <div className="d-flex pb-3">
+                        {this.checkIfReviewsExist()
+                            ? <Rating
+                                programs={academyInfo.academy_programs}
+                            />
+                            : 'Akademija kol kas neturi reitingo.'
+                        }
+                    </div>
                     <h3 className="my-4">Programos</h3>
-                    <div className="d-flex">
+                    <div className="d-flex pb-3">
                         {academyInfo.academy_programs && academyInfo.academy_programs.length > 0
                             ? <Programs
                                 programs={academyInfo.academy_programs}

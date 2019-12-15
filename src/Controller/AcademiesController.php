@@ -88,8 +88,17 @@ class AcademiesController extends AbstractController
         foreach ($academy->getPrograms() as $program) {
             $reviews = [];
             foreach ($program->getReviews() as $review) {
+                $consumer = $review->getConsumer();
+                $consumerName = null;
+                if ($consumer !== null) {
+                    $consumerName = $consumer->getConsumerName();
+                }
                 $reviews[] = [
-                    'comment' => $review->getReviewComment()
+                    'id' => $review->getId(),
+                    'comment' => $review->getReviewComment(),
+                    'rating' => $review->getReviewStars(),
+                    'date' => $review->getReviewData(),
+                    'consumer' => $consumerName
                 ];
             }
 
@@ -98,6 +107,7 @@ class AcademiesController extends AbstractController
                 'program_id' => $program->getId(),
                 'program_name' => $program->getProgramName(),
                 'program_price' => $program->getProgramPrice(),
+                'program_description' => $program->getProgramDescription(),
                 'program_locations' => $this->getProgramLocations($program->getEvents()),
                 'program_address ' => $this->getProgramAddress($program->getEvents()),
                 'program_reviews' => $reviews,

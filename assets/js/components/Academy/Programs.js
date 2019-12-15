@@ -23,8 +23,8 @@ class Programs extends Component {
 
         return (
             <Tab.Container id="left-tabs-example" defaultActiveKey={this.getDefaultProgram()}>
-                <Row>
-                    <Col sm={3}>
+                <Row className="w-100">
+                    <Col sm={12} lg={3}>
                         <Nav variant="pills" className="flex-column">
                             {programs.map((program) => (
                                 <Nav.Item key={program.program_id}>
@@ -33,7 +33,7 @@ class Programs extends Component {
                             ))}
                         </Nav>
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={12} lg={9}>
                         <Tab.Content>
                             {programs.map((program, index) => (
                                     <Program
