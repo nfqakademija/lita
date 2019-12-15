@@ -78,22 +78,14 @@ class GoogleAuthenticator extends SocialAuthenticator
         // 1) have they logged in with Google before? Easy!
         $existingUser = $this->em->getRepository(Consumer::class)
             ->findOneBy(['googleId' => $googleUser->getId()]);
-
-        if (null !== $existingUser) {
+        if ($existingUser) {
             return $existingUser;
         }
 
+        // 2) do we have a matching user by email?
         /** @var Consumer $existingUser */
         $existingUser = $this->em->getRepository(Consumer::class)
             ->findOneBy(['consumer_email' => $consumer_email]);
-
-        if (null !== $existingUser) {
-            $existingUser->setConsumerEmail($googleUser->getEmail());
-            $this->em->persist($existingUser);
-            $this->em->flush();
-
-            return $existingUser;
-        }
 
         // 3) Maybe you just want to "register" them by creating a User object
         $user = new Consumer();
