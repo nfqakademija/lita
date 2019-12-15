@@ -184,6 +184,11 @@ class Consumer implements UserInterface
         return $this;
     }
 
+    public function getConsumerPassword(): string
+    {
+        return (string)$this->consumer_password;
+    }
+
     /**
      * @see UserInterface
      */
