@@ -14,9 +14,10 @@ export default function App() {
                 <Route path="/" exact>
                     <Home />
                 </Route>
-                <Route path="/:academyId">
+                <Route path="/:academyId(\d+)">
                     <AcademyInfo />
                 </Route>
+                <Route><Home /></Route>
             </Switch>
         </Router>
     );
