@@ -19,8 +19,7 @@ class ProgramFixtures extends Fixture
             $program->setProgramDescription('Lorem ipsum dolor sit amet, consectetur adipiscing ' .
                 'elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.Sed dui lorem, ' .
                 'adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis ' .
-                'placerat, felis enim.'
-            );
+                'placerat, felis enim.');
             $manager->persist($program);
             $manager->flush();
         }
