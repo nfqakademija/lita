@@ -30,7 +30,7 @@ class AcademiesController extends AbstractController
             ->getRepository(Academy::class)
             ->findAll();
 
-        if ($academies === null) {
+        if ($academies == null) {
             return new JsonResponse("We could not find any academies", Response::HTTP_NOT_FOUND);
         }
 
@@ -62,7 +62,7 @@ class AcademiesController extends AbstractController
     /**
      * Returns academy selected by the id.
      *
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      *
      * @Route(
