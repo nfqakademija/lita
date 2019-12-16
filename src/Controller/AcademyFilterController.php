@@ -19,10 +19,12 @@ class AcademyFilterController extends AbstractController
 {
     /** @var AcademyRepository */
     private $academyRepository;
+
     public function __construct(AcademyRepository $academyRepository)
     {
         $this->academyRepository = $academyRepository;
     }
+
     /**
      * @Route("/api/v1/filter", name="filter")
      * @param Request $request
