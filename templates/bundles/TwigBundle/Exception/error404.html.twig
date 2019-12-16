@@ -2,7 +2,7 @@
 
 {% block body %}
     {% block stylesheets %}
-        {{ encore_entry_link_tags('index') }}
+        {{ parent() }}
         {{ encore_entry_link_tags('errorStyle') }}
     {% endblock %}
     <div class="col-12 text-center">
