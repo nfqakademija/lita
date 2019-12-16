@@ -49,11 +49,12 @@ class AcademyInfo extends Component {
                         </nav>
                     </div>
                     <div className="row align-items-center justify-content-between h-100">
-                        <h1 className="my-4">{academyInfo.academy_name}</h1>
+                        <div className="col-md-1 pl-md-0 col-12">
+                            <h1 className="my-4">{academyInfo.academy_name}</h1>
+                        </div>
                     </div>
                     <div className="row align-items-center justify-content-between h-100">
-
-                        <div className="col-md-1 pl-0">
+                        <div className="col-md-1 pl-md-0 mb-2 col-12">
                             <img
                                 className="img-fluid"
                                 src={academyInfo.academy_logo}
@@ -72,10 +73,10 @@ class AcademyInfo extends Component {
                                 Eiti į akademijos puslapį
                             </a>
                         </div>
-                        <div className="col-md-3 pr-0">
+                        <div className="col-md-3 pr-0 mt-3 mt-md-0">
                             <h3 className="">Kontaktai</h3>
                             <ul>
-                                <li>{academyInfo.academy_email}</li>
+                                <li><a href={`mailto:${academyInfo.academy_email}`}>{academyInfo.academy_email}</a></li>
                                 <li>{academyInfo.academy_url}</li>
                             </ul>
                         </div>
