@@ -17,7 +17,7 @@ class ReviewsController extends AbstractController
     /**
      * @Route("/api/v1/program/{id}/review",
      *     name="review",
-     *     methods={"GET","POST"},
+     *     methods={"POST"},
      *     requirements={"id"="\d+"})
      * @param int $id
      * @param Request $request
@@ -31,29 +31,23 @@ class ReviewsController extends AbstractController
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
-        //Get program_id from Repository
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->find($id);
 
-        //Check if program_id exists
         if (empty($program)) {
             return new JsonResponse(['message' => 'Program not found'], Response::HTTP_NOT_FOUND);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $review = $form->getData();
-
-            //Post data to DB
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
             $em->flush();
-
-            //Return 201 HTTP response
-            return new JsonResponse(
-                'Review left successfully',
-                JsonResponse::HTTP_CREATED
-            );
         }
+
+        return new JsonResponse(
+            'Review left successfully',
+            JsonResponse::HTTP_CREATED
+        );
     }
 }
