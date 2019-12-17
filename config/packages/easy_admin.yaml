@@ -35,7 +35,9 @@ easy_admin:
                         {
                             'Front-End':  'Front-End',
                             'Back-End':   'Back-End',
-                            'Testavimas': 'Testavimas'
+                            'Testavimas': 'Testavimas',
+                            'Java': 'Java',
+                            'PHP': 'PHP'
                         }
                       }
                    }
