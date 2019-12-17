@@ -34,9 +34,11 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     private $router;
 
-
-    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
-    {
+    public function __construct(
+        ClientRegistry $clientRegistry,
+        EntityManagerInterface $em,
+        RouterInterface $router
+    ) {
         $this->clientRegistry = $clientRegistry;
         $this->em = $em;
         $this->router = $router;
@@ -128,13 +130,7 @@ class GoogleAuthenticator extends SocialAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // change "app_homepage" to some route in your app
-        $targetUrl = $this->router->generate('home');
-
-        return new RedirectResponse($targetUrl);
-
-        // or, on success, let the request continue to be handled by the controller
-        //return null;
+        return null;
     }
 
     /**
