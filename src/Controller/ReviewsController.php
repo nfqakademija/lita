@@ -56,7 +56,7 @@ class ReviewsController extends AbstractController
             $em->persist($review);
             $em->flush();
         } else {
-            return new JsonResponse("Only One review is allowed per user", Response::HTTP_METHOD_NOT_ALLOWED);
+            return new JsonResponse("You already left one review for that program", Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         return new JsonResponse(
