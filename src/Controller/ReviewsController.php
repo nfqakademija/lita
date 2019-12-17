@@ -17,7 +17,7 @@ class ReviewsController extends AbstractController
     /**
      * @Route("/api/v1/program/{program_id}/consumers/{googleId}/review",
      *     name="review",
-     *     methods={"POST"},
+     *     methods={"POST", "GET"},
      *     requirements={"program_id"="\d+", "googleId"="\d+"})
      * @param int $program_id
      * @param int $googleId
@@ -41,27 +41,33 @@ class ReviewsController extends AbstractController
             ->getRepository(Consumer::class)
             ->find($googleId);
 
-        if ($user === null) {
+        $userId = $user->getGoogleId();
+
+        //If there is consumer with specified google_id
+        if ($userId != null) {
+            //If consumer did not yet leave review
+            if ($user->getReviews()->count() == 0) {
+                $review->setReviewStars($review_stars);
+                $review->setReviewComment($review_comment);
+                $review->setReviewData($review_data);
+                $review->setProgram($program);
+                $review->setConsumer($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($review);
+                $em->flush();
+            } else {
+                return new JsonResponse(
+                    "You already left one review for that program",
+                    Response::HTTP_METHOD_NOT_ALLOWED
+                );
+            }
+            return new JsonResponse(
+                'Review left successfully',
+                JsonResponse::HTTP_CREATED
+            );
+        } else {
             return new JsonResponse("Please login with Google to leave a review", Response::HTTP_NOT_FOUND);
         }
-
-        if ($user->getReviews()->count() == 0) {
-            $review->setReviewStars($review_stars);
-            $review->setReviewComment($review_comment);
-            $review->setReviewData($review_data);
-            $review->setProgram($program);
-            $review->setConsumer($user);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($review);
-            $em->flush();
-        } else {
-            return new JsonResponse("You already left one review for that program", Response::HTTP_METHOD_NOT_ALLOWED);
-        }
-
-        return new JsonResponse(
-            'Review left successfully',
-            JsonResponse::HTTP_CREATED
-        );
     }
 }
