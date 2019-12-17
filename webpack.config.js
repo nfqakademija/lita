@@ -37,6 +37,7 @@ Encore
     .addEntry('index', './assets/js/index.js')
     .addStyleEntry('errorStyle', './assets/css/errorStyle.scss')
     .addEntry('errorPage', './assets/js/errorPage.js')
+    .addEntry('banner', './assets/js/banner.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

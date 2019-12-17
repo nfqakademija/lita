@@ -1,5 +1,4 @@
-let tl = new TimelineMax();
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
     let tl = new TimelineMax();
 
     tl.from('#stand', 0.5, {

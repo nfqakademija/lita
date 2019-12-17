@@ -6,19 +6,20 @@ import './card.scss';
 class Card extends PureComponent {
     getPrice = () => {
         const { academy } = this.props;
-        let price = {};
+        let price = null;
 
         if (academy.academy_price.min_price === null && academy.academy_price.max_price === null) {
-            price.minimum = 'Nežinoma';
+            price = 'Kaina nenustatyta';
         } else if (academy.academy_price.min_price === '0' && academy.academy_price.max_price === '0') {
-            price.minimum = 'Nemokama';
+            price = 'Nemokama';
         } else if (academy.academy_price.min_price === null) {
-            price.minimum = '0';
+            price = (<span><i className="fa fa-eur pr-1" aria-hidden="true"/> 0</span>);
+        } else if (academy.academy_price.min_price === academy.academy_price.max_price) {
+            price = (<span><i className="fa fa-eur pr-1" aria-hidden="true"/> { academy.academy_price.min_price }</span>);
         } else {
-            price = {
-                minimum: academy.academy_price.min_price,
-                maximum: academy.academy_price.max_price
-            }
+            price = (<span>
+                <i className="fa fa-eur pr-1" aria-hidden="true"/> { academy.academy_price.min_price } - { academy.academy_price.max_price }
+            </span>);
         }
 
         return price;
@@ -44,16 +45,15 @@ class Card extends PureComponent {
                     </div>
                     <div className="col-lg-4 p-3 d-flex flex-column justify-content-between card-right">
                         <div className="row justify-content-end">
-                            <div className="col-5 text-right">
-                                <i className="fa fa-eur pr-1" aria-hidden="true" />
+                            <div className="col-12 text-right">
                                 <span className="price">
-                                    {this.getPrice().minimum} {this.getPrice().maximum ?  `- ${this.getPrice().maximum}` : null}
+                                    {this.getPrice()}
                                 </span>
                             </div>
                         </div>
                         <div className="d-flex flex-column align-items-end">
-                            <div className="mt-4 mb-5">
-                                <a href={academy.academy_url} className="card-link">{academy.academy_url}</a>
+                            <div className="mt-3 mb-2">
+                                <a className="btn btn-primary" href={academy.academy_url} role="button">Akademijos puslapis</a>
                             </div>
                             <Link to={{
                                 pathname: `/${academy.academy_id}`,
