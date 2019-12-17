@@ -10,6 +10,8 @@
         "knpuniversity/oauth2-client-bundle": "^1.31",
         "league/oauth2-facebook": "^2.0",
         "league/oauth2-google": "^3.0",
+        "nelmio/cors-bundle": "^2.0",
+        "nikic/php-parser": "^4.3",
         "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",

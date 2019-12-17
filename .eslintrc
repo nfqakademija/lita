@@ -15,6 +15,10 @@
   "globals": {
     "document": "readonly",
     "window": "readonly",
-    "location": "readonly"
+    "location": "readonly",
+    "TimelineMax": "readonly",
+    "Power2": "readonly",
+    "Bounce": "readonly",
+    "Circ": "readonly"
   }
 }
