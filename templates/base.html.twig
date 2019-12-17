@@ -15,6 +15,9 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('index') }}
         {% endblock %}
+        <script>
+            window.__user = '{{ app.user ? app.user.userName : 'empty' }}'
+        </script>
     </head>
     <body>
         {{ include('home/header.html.twig') }}

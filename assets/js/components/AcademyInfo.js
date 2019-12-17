@@ -19,11 +19,10 @@ class AcademyInfo extends Component {
         this.setState({ extendedAcademyInfo, programFilter: searchParams.get('Program') });
     }
 
-    checkIfReviewsExist = () => {
-        const { extendedAcademyInfo: academyInfo } = this.state;
-        return academyInfo.academy_programs
-            && academyInfo.academy_programs.length > 0
-            && academyInfo.academy_programs[0].program_reviews.length > 0;
+    checkIfReviewsExist = (programs) => {
+        return programs.reduce((exists,currentProgram) => {
+            return !exists && currentProgram.program_reviews && currentProgram.program_reviews.length > 0;
+        }, false);
     };
 
     render() {
@@ -68,7 +67,7 @@ class AcademyInfo extends Component {
                                 rel="noreferrer noopener"
                                 target="_blank"
                                 href={academyInfo.academy_url}
-                                className="btn btn-primary"
+                                className="btn btn-primary btn-block-sm-only"
                             >
                                 Eiti į akademijos puslapį
                             </a>
@@ -84,7 +83,7 @@ class AcademyInfo extends Component {
                     </div>
                     <h3 className="my-4">Akademijos reitingas</h3>
                     <div className="d-flex pb-3">
-                        {this.checkIfReviewsExist()
+                        {academyInfo.academy_programs && academyInfo.academy_programs.length > 0 && this.checkIfReviewsExist(academyInfo.academy_programs)
                             ? <Rating
                                 programs={academyInfo.academy_programs}
                             />
@@ -92,7 +91,7 @@ class AcademyInfo extends Component {
                         }
                     </div>
                     <h3 className="my-4">Programos</h3>
-                    <div className="d-flex pb-3">
+                    <div className="pb-3">
                         {academyInfo.academy_programs && academyInfo.academy_programs.length > 0
                             ? <Programs
                                 programs={academyInfo.academy_programs}
