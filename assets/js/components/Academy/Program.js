@@ -41,10 +41,7 @@ class Program extends PureComponent {
                                 <div className="col-md-12">
                                     <div className="reviews">
                                         <h3 className="mt-5">Atsiliepimai</h3>
-                                        {program.program_reviews.length > 0
-                                        ? (<Reviews  reviews={program.program_reviews}/>)
-                                        : 'Akademija kol kas neturi atsilipimų.'
-                                        }
+                                        <Reviews  reviews={program.program_reviews} programId={program.program_id}/>
                                     </div>
                                 </div>
                             </div>

@@ -30,10 +30,11 @@ class ReviewsController extends AbstractController
         }
 
         $review = new Review();
+        $data = json_decode($request->getContent(), true);
 
-        $program_id = $request->get('program_id');
-        $review_stars = $request->get('review_stars');
-        $review_comment = $request->get('review_comment');
+        $program_id = $data['program_id'];
+        $review_stars = $data['review_stars'];
+        $review_comment = $data['review_comment'];
         $review_data = new \DateTime('now');
 
         $program = $this->getDoctrine()
@@ -51,7 +52,7 @@ class ReviewsController extends AbstractController
 
         if ($userReviewsCount > 0) {
             return new JsonResponse(
-                'Only one review per program is allowed',
+                'Atsiliepimą apie programą galima palikti tik vieną kartą',
                 JsonResponse::HTTP_NOT_ACCEPTABLE
             );
         }
@@ -67,7 +68,7 @@ class ReviewsController extends AbstractController
         $em->flush();
 
         return new JsonResponse(
-            'Review left successfully',
+            'Atsiliepimas sėkmingai paliktas',
             JsonResponse::HTTP_CREATED
         );
     }

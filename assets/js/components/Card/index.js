@@ -53,7 +53,15 @@ class Card extends PureComponent {
                         </div>
                         <div className="d-flex flex-column align-items-end">
                             <div className="mt-3 mb-2">
-                                <a className="btn btn-primary" href={academy.academy_url} role="button">Akademijos puslapis</a>
+                                <a
+                                    className="btn btn-primary"
+                                    rel="noopener noreferrer nofollow"
+                                    target="_blank"
+                                    href={academy.academy_url}
+                                    role="button"
+                                >
+                                    Akademijos puslapis
+                                </a>
                             </div>
                             <Link to={{
                                 pathname: `/${academy.academy_id}`,

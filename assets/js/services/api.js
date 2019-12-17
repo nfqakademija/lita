@@ -42,3 +42,14 @@ export function filterAcademies(City, Program, Price) {
             return response.data;
         })
 }
+
+export function addReview(programId, stars, comment) {
+    return axios.post(
+        'api/v1/reviews/create',
+        {
+            program_id: programId.toString(),
+            review_stars: stars,
+            review_comment: comment
+        }
+    )
+}
