@@ -37,7 +37,14 @@ easy_admin:
                             'Back-End':   'Back-End',
                             'Testavimas': 'Testavimas',
                             'Java': 'Java',
-                            'PHP': 'PHP'
+                            'PHP': 'PHP',
+                            '.Net': '.Net',
+                            'IT specialistas': 'IT specialistas',
+                            'Full-Stack': 'Full-Stack',
+                            'Web dizainas': 'Web dizainas',
+                            'Phyton': 'Phyton',
+                            'Dirbtinis intelektas': 'Dirbtinis intelektas',
+                            'Javascript': 'Javascript'
                         }
                       }
                    }
