@@ -27,6 +27,10 @@
                     </div>
                 </div>
 
+                <a href="{{ path('connect_google_start') }}"> Google </a>
+                <p>Username: {{ app.user.consumerEmail ?? 'Anonymous user' }}</p>
+                <a href="/logout">logout </a>
+
                 <div class="col-lg-5 col-md-5 col-sm-12 my-auto">
                     <img src="{{asset('build/images/main_bg.png')}}" class="img-fluid" alt="IT academies">
                 </div>
