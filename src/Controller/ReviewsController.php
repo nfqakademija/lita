@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Program;
 use App\Entity\Review;
-use App\Form\Type\ReviewType;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReviewsController extends AbstractController
@@ -28,22 +26,22 @@ class ReviewsController extends AbstractController
     {
         $review = new Review();
 
-        $form = $this->createForm(ReviewType::class, $review);
-        $form->handleRequest($request);
+        $review_stars = $request->get('review_stars');
+        $review_comment = $request->get('review_comment');
+        $review_data = new \DateTime("now");
 
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->find($id);
 
-        if (empty($program)) {
-            return new JsonResponse(['message' => 'Program not found'], Response::HTTP_NOT_FOUND);
-        }
+        $review->setReviewStars($review_stars);
+        $review->setReviewComment($review_comment);
+        $review->setReviewData($review_data);
+        $review->setProgram($program);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($review);
-            $em->flush();
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($review);
+        $em->flush();
 
         return new JsonResponse(
             'Review left successfully',
