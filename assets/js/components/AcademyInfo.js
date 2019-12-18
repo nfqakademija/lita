@@ -48,7 +48,7 @@ class AcademyInfo extends Component {
                         </nav>
                     </div>
                     <div className="row align-items-center justify-content-between h-100">
-                        <div className="col-md-1 pl-md-0 col-12">
+                        <div className="col-12">
                             <h1 className="my-4">{academyInfo.academy_name}</h1>
                         </div>
                     </div>
