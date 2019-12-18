@@ -80,7 +80,7 @@ class Filters extends Component {
                                         { this.props.selectedCity === null ? "Miestas" : this.props.selectedCity }
                                     </Dropdown.Toggle>
 
-                                    <Dropdown.Menu>
+                                    <Dropdown.Menu className="col-12">
                                         <Dropdown.Item onSelect={this.selectCity} className="filter-item">Visi</Dropdown.Item>
                                         {this.props.cityOptions.map(city => (
                                             <Dropdown.Item key={city} onSelect={this.selectCity} className="filter-item">{ city }</Dropdown.Item>
@@ -94,7 +94,7 @@ class Filters extends Component {
                                         { this.props.selectedType === null ? "Programa" : this.props.selectedType }
                                     </Dropdown.Toggle>
 
-                                    <Dropdown.Menu>
+                                    <Dropdown.Menu className="col-12">
                                         <Dropdown.Item onSelect={this.selectType} className="filter-item">Visos</Dropdown.Item>
                                         {this.props.typeOptions.map(type => (
                                             <Dropdown.Item key={type} onSelect={this.selectType} className="filter-item">{ type }</Dropdown.Item>
@@ -120,6 +120,7 @@ class Filters extends Component {
                                 name="sort"
                                 checked={this.props.price === 'Pigiausios viršuje'}
                                 id="cheap"
+                                className="btn-block-sm-only"
                             />
                             <Form.Check
                                 custom
@@ -130,6 +131,7 @@ class Filters extends Component {
                                 name="sort"
                                 checked={this.props.price === 'Brangiausios viršuje'}
                                 id="expensive"
+                                className="btn-block-sm-only"
                             />
                             <Form.Check
                                 custom
@@ -140,6 +142,7 @@ class Filters extends Component {
                                 name="sort"
                                 checked={this.props.price === 'Nemokamos'}
                                 id="free"
+                                className="btn-block-sm-only"
                             />
                         </div>
                     </Form>

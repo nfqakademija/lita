@@ -20,8 +20,8 @@ class AcademyInfo extends Component {
     }
 
     checkIfReviewsExist = (programs) => {
-        return programs.reduce((exists,currentProgram) => {
-            return !exists && currentProgram.program_reviews && currentProgram.program_reviews.length > 0;
+        return programs.reduce((exists, currentProgram) => {
+            return exists ? exists : currentProgram.program_reviews && currentProgram.program_reviews.length > 0;
         }, false);
     };
 
@@ -76,7 +76,15 @@ class AcademyInfo extends Component {
                             <h3 className="">Kontaktai</h3>
                             <ul>
                                 <li><a href={`mailto:${academyInfo.academy_email}`}>{academyInfo.academy_email}</a></li>
-                                <li>{academyInfo.academy_url}</li>
+                                <li>
+                                    <a
+                                        href={academyInfo.academy_url}
+                                        rel="noreferrer noopener"
+                                        target="_blank"
+                                    >
+                                        {academyInfo.academy_url}
+                                    </a>
+                                </li>
                             </ul>
                         </div>
 

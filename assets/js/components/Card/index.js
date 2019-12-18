@@ -29,10 +29,18 @@ class Card extends PureComponent {
         const { academy } = this.props;
         return (
             <div className="card promoting-card flex-wrap flex-row academy-card academy-card--shadow">
-                    <div className="col-lg-8 card-body d-flex flex-row p-3">
-                        <img src={academy.academy_logo} className="logo rounded-circle mr-3" alt={academy.academy_name} />
-                        <div>
-                            <h5 className="card-title font-weight-bold mb-2">{academy.academy_name}</h5>
+                    <div className="col-lg-8 card-body row m-0 flex-row p-3">
+                        <img src={academy.academy_logo} className="logo col-lg-2 col-12 my-4 my-lg-0" alt={academy.academy_name} />
+                        <div className="col-lg-10 col-12">
+                            <Link
+                                to={{
+                                    pathname: `/${academy.academy_id}`,
+                                    search: location.search,
+                                }}
+                                className="academy-card__header"
+                            >
+                                <h5 className="card-title font-weight-bold mb-2">{academy.academy_name}</h5>
+                            </Link>
                             <p className="card-text">
                                 {academy.academy_description
                                     ? academy.academy_description
@@ -40,8 +48,6 @@ class Card extends PureComponent {
                                 }
                             </p>
                         </div>
-
-
                     </div>
                     <div className="col-lg-4 p-3 d-flex flex-column justify-content-between card-right">
                         <div className="row justify-content-end">
@@ -52,9 +58,9 @@ class Card extends PureComponent {
                             </div>
                         </div>
                         <div className="d-flex flex-column align-items-end">
-                            <div className="mt-3 mb-2">
+                            <div className="mt-3 mb-2 w-100 text-right">
                                 <a
-                                    className="btn btn-primary"
+                                    className="btn btn-primary btn-block-sm-only"
                                     rel="noopener noreferrer nofollow"
                                     target="_blank"
                                     href={academy.academy_url}
@@ -63,11 +69,14 @@ class Card extends PureComponent {
                                     Akademijos puslapis
                                 </a>
                             </div>
-                            <Link to={{
-                                pathname: `/${academy.academy_id}`,
-                                search: location.search,
-                            }}>
-                                <button type="button" className="btn btn-blue">Skaityti daugiau</button>
+                            <Link
+                                to={{
+                                    pathname: `/${academy.academy_id}`,
+                                    search: location.search,
+                                }}
+                                className="btn-block-sm-only"
+                            >
+                                <button type="button" className=" w-100 btn btn-blue">Skaityti daugiau</button>
                             </Link>
                         </div>
                 </div>
