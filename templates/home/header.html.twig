@@ -17,6 +17,11 @@
                 <li class="nav-item {% if activeNavItem is defined and activeNavItem == 'contacts' %}active{% endif %}">
                     <a class="nav-link" href="{{ path('contacts') }}">Kontaktai</a>
                 </li>
+                {% if app.user.id is defined %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Atsijungti</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
