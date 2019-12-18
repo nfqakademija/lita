@@ -26,15 +26,13 @@ class Program extends PureComponent {
                             className={`tab-pane ${open ? 'active' : ''}`}
                         >
                             <div className="row justify-content-between">
-                                <div className="col-md-8 pr-0">
+                                <div className="col-md-8 pr-0 mt-5 mt-sm-0">
                                     <h3>{program.program_name}</h3>
                                     <p>{program.program_description}</p>
                                 </div>
 
                                 <div className="col-md-3 pr-0">
-                                    <ul>
-                                        <li><h4>Kaina: {this.renderProgramPriceBadge()}</h4></li>
-                                    </ul>
+                                    <h5>Kaina: {this.renderProgramPriceBadge()} €</h5>
                                 </div>
                             </div>
                             <div className="row">

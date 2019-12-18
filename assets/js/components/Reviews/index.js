@@ -11,13 +11,14 @@ class Reviews extends Component {
     state = {
         stars: 0,
         error: null,
+        success: null,
         reviews: this.props.reviews
     };
 
     submitReview = async () => {
         try {
             if (this.state.stars !== 0) {
-                await addReview(this.props.programId, this.state.stars, this.comment.current.value);
+                const { data } = await addReview(this.props.programId, this.state.stars, this.comment.current.value);
 
                 const updatedReviews = [...this.state.reviews];
                 updatedReviews.push({
@@ -28,7 +29,7 @@ class Reviews extends Component {
                     id: 'temporary'
                 });
 
-                this.setState({ reviews: updatedReviews })
+                this.setState({ reviews: updatedReviews, success: data })
             } else {
                 this.starsLabel.current.classList.add('text-danger');
             }
@@ -66,6 +67,14 @@ class Reviews extends Component {
         return window.__user !== 'empty'
             ? (
                 <div className="mb-5">
+                    {this.state.success !== null && this.state.error === null
+                        ? (
+                            <div className="alert alert-success" role="alert">
+                                {this.state.success}
+                            </div>
+                        )
+                        : null
+                    }
                     {this.state.error !== null
                         ? (
                                 <div className="alert alert-danger" role="alert">
@@ -85,7 +94,7 @@ class Reviews extends Component {
                         </div>
                     </div>
                     <p><small>Atsiliepimą apie programą galima palikti tik vieną kartą.</small></p>
-                    <button type="submit" className="btn btn-primary mb-2" onClick={this.submitReview}>Skelbti</button>
+                    <button type="submit" className="btn btn-primary mb-2 btn-block-sm-only" onClick={this.submitReview}>Skelbti</button>
                 </div>
             )
             : (
